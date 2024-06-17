@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Регистрация водителя</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5dc;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    label {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #333;
+    }
+    input[type="tel"],
+    input[type="text"],
+    textarea {
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      font-size: 16px;
+    }
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Регистрация водителя</h1>
+  <form id="registration-form">
+    <label for="full-name">ФИО:</label>
+    <input type="text" id="full-name" name="full-name" required>
+    <label for="phone-number">Номер телефона:</label>
+    <input type="tel" id="phone-number" name="phone-number" required>
+    <label for="license-plate">Госномер:</label>
+    <input type="text" id="license-plate" name="license-plate" required>
+    <label for="car-description">Описание автомобиля:</label>
+    <textarea id="car-description" name="car-description" required></textarea>
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+  <script>
+    $(document).ready(function() {
+      $("#phone-number").mask("+7 999 999-99-99");
+    });
+
+    const form = document.getElementById('registration-form');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const fullName = document.getElementById('full-name').value;
+      const phoneNumber = document.getElementById('phone-number').value;
+      const licensePlate = document.getElementById('license-plate').value;
+      const carDescription = document.getElementById('car-description').value;
+      const formData = new FormData();
+      formData.append('full_name', fullName);
+      formData.append('phone_number', phoneNumber);
+      formData.append('license_plate', licensePlate);
+      formData.append('car_description', carDescription);
+      await Telegram.WebApp.sendData(JSON.stringify(Object.fromEntries(formData)));
+    });
+
+    Telegram.WebApp.ready();
+  </script>
+</body>
+</html>
