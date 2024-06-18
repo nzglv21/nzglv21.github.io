@@ -59,6 +59,7 @@
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
     }
 
     label {
@@ -66,7 +67,7 @@
       margin-bottom: 5px;
     }
 
-    input[type="text"], input[type="time"], input[type="date"], textarea {
+    input[type="text"], input[type="time"], input[type="date"] {
       width: 100%;
       padding: 5px;
       margin-bottom: 10px;
@@ -96,7 +97,7 @@
         padding: 10px;
       }
 
-      input[type="text"], input[type="time"], input[type="date"], textarea {
+      input[type="text"], input[type="time"], input[type="date"] {
         padding: 3px;
         margin-bottom: 5px;
       }
@@ -111,39 +112,29 @@
   <div id="cover"></div>
   <form id="order-form">
     <label for="from">Откуда:</label>
-    <input type="text" id="from" name="from" list="cities" required>
-    <datalist id="cities">
-      <option value="Город 1">
-      <option value="Город 2">
-      <option value="Город 3">
-    </datalist>
+    <input type="text" id="from" name="from" required>
     <label for="to">Куда:</label>
-    <input type="text" id="to" name="to" list="cities" required>
+    <input type="text" id="to" name="to" required>
     <label for="time">Время:</label>
     <input type="time" id="time" name="time" required>
     <label for="date">Дата:</label>
     <input type="date" id="date" name="date" required>
-    <label for="additional-info">Дополнительная информация:</label>
-    <textarea id="additional-info" name="additional-info"></textarea>
     <input type="submit" value="Создать заказ">
   </form>
   <script>
-    document.getElementById('order-form').addEventListener('submit', async function(event) {
+    const form = document.getElementById('order-form');
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      var data = new FormData(event.target);
-      try {
-        const response = await fetch('/create-order', {
-          method: 'POST',
-          body: data
-        });
-        // Передача данных заказа в бота с помощью Telegram WebApp API
-        Telegram.WebApp.sendData(JSON.stringify(Object.fromEntries(data)));
-        // Закрытие WebApp
-        Telegram.WebApp.close();
-      } catch (error) {
-        console.error(error);
-      }
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const time = document.getElementById('time').value;
+      const date = document.getElementById('date').value;
+      const data = { from, to, time, date };
+      const tg = window.Telegram.WebApp;
+      await tg.sendData(JSON.stringify(data));
+      tg.close();
     });
+    Telegram.WebApp.ready();
   </script>
 </body>
 </html>
