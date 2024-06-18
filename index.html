@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Создание заказа</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     /* CSS стили здесь */
     :root {
@@ -127,17 +128,21 @@
     <input type="submit" value="Создать заказ">
   </form>
   <script>
-    document.getElementById('order-form').addEventListener('submit', function(event) {
+    document.getElementById('order-form').addEventListener('submit', async function(event) {
       event.preventDefault();
       var data = new FormData(event.target);
-      fetch('/create-order', {
-        method: 'POST',
-        body: data
-      }).then(function(response) {
+      try {
+        const response = await fetch('/create-order', {
+          method: 'POST',
+          body: data
+        });
         // Передача данных заказа в бота с помощью Telegram WebApp API
         Telegram.WebApp.sendData(JSON.stringify(Object.fromEntries(data)));
+        // Закрытие WebApp
         Telegram.WebApp.close();
-      });
+      } catch (error) {
+        console.error(error);
+      }
     });
   </script>
 </body>
