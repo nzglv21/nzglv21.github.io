@@ -8,17 +8,18 @@
       font-family: Arial, sans-serif;
       background-color: var(--tg-theme-bg-color);
       color: var(--tg-theme-text-color);
+      overflow-x: hidden;
     }
     form {
       display: flex;
       flex-direction: column;
-      max-width: 300px;
+      max-width: 90%;
       margin: 0 auto;
     }
     label {
       margin-top: 10px;
     }
-    input, textarea, select {
+    input, textarea {
       margin-top: 5px;
       padding: 5px;
       border: 1px solid var(--tg-theme-hint-color);
@@ -41,18 +42,16 @@
   <h1>Заявка на услугу</h1>
   <form id="my-form">
     <label for="from">Откуда:</label>
-    <select id="from" name="from">
-      <option value="Город1">Город1</option>
-      <option value="Город2">Город2</option>
-      <option value="Город3">Город3</option>
-    </select>
+    <input type="text" id="from" name="from" list="cities">
 
     <label for="to">Куда:</label>
-    <select id="to" name="to">
-      <option value="Город1">Город1</option>
-      <option value="Город2">Город2</option>
-      <option value="Город3">Город3</option>
-    </select>
+    <input type="text" id="to" name="to" list="cities">
+
+    <datalist id="cities">
+      <option value="Город1">
+      <option value="Город2">
+      <option value="Город3">
+    </datalist>
 
     <label for="date">Дата:</label>
     <input type="date" id="date" name="date">
