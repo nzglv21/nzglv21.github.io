@@ -18,7 +18,7 @@
     label {
       margin-top: 10px;
     }
-    input, textarea {
+    input, textarea, select {
       margin-top: 5px;
       padding: 5px;
       border: 1px solid var(--tg-theme-hint-color);
@@ -40,28 +40,41 @@
 <body>
   <h1>Заявка на услугу</h1>
   <form id="my-form">
-    <label for="name">Откуда:</label>
-    <input type="text" id="name" name="name" placeholder="Введите ваше ФИО" required>
-    <label for="phone">Куда:</label>
-    <input type="tel" id="phone" name="phone" placeholder="Введите ваш номер телефона" required>
-    <label for="license-plate">Датв:</label>
-    <input type="text" id="license-plate" name="license-plate" placeholder="Введите ГОСТ номер автомобиля" required>
-    <label for="car-description">Время:</label>
-    <textarea id="car-description" name="car-description" placeholder="Опишите внешний вид автомобиля" required></textarea>
+    <label for="from">Откуда:</label>
+    <select id="from" name="from">
+      <option value="Город1">Город1</option>
+      <option value="Город2">Город2</option>
+      <option value="Город3">Город3</option>
+    </select>
+
+    <label for="to">Куда:</label>
+    <select id="to" name="to">
+      <option value="Город1">Город1</option>
+      <option value="Город2">Город2</option>
+      <option value="Город3">Город3</option>
+    </select>
+
+    <label for="date">Дата:</label>
+    <input type="date" id="date" name="date">
+
+    <label for="time">Время:</label>
+    <input type="time" id="time" name="time" step="1800">
+
     <label for="message">Доп информация пользователю:</label>
     <textarea id="message" name="message" placeholder="Введите сообщение" required></textarea>
+
     <button type="submit">Отправить</button>
   </form>
   <script>
     const form = document.getElementById('my-form');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const licensePlate = document.getElementById('license-plate').value;
-      const carDescription = document.getElementById('car-description').value;
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
       const message = document.getElementById('message').value;
-      const data = { name, phone, licensePlate, carDescription, message };
+      const data = { from, to, date, time, message };
       const tg = window.Telegram.WebApp;
       await tg.sendData(JSON.stringify(data));
       tg.close();
