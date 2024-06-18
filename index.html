@@ -44,6 +44,14 @@
       color: var(--tg-theme-button-text-color);
       cursor: pointer;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 10px;
+      border: 1px solid var(--tg-theme-hint-color);
+    }
   </style>
 </head>
 <body>
@@ -76,17 +84,63 @@
       <option value="8">
     </datalist>
 
+    <table>
+      <tr>
+        <td>Забрать по адресу:</td>
+        <td>
+          <input type="radio" id="pickup-yes" name="pickup" value="yes">
+          <label for="pickup-yes">Да</label>
+        </td>
+        <td>
+          <input type="radio" id="pickup-no" name="pickup" value="no" checked>
+          <label for="pickup-no">Нет</label>
+        </td>
+      </tr>
+      <tr id="address-row" style="display: none;">
+        <td>Адрес:</td>
+        <td colspan="2">
+          <input type="text" id="address" name="address" placeholder="Введите адрес">
+        </td>
+      </tr>
+      <tr>
+        <td>Детское кресло:</td>
+        <td>
+          <input type="radio" id="child-seat-yes" name="child-seat" value="yes">
+          <label for="child-seat-yes">Да</label>
+        </td>
+        <td>
+          <input type="radio" id="child-seat-no" name="child-seat" value="no" checked>
+          <label for="child-seat-no">Нет</label>
+        </td>
+      </tr>
+    </table>
+
     <button type="submit">Отправить</button>
   </form>
   <script>
     const form = document.getElementById('my-form');
+    const pickupYes = document.getElementById('pickup-yes');
+    const pickupNo = document.getElementById('pickup-no');
+    const addressRow = document.getElementById('address-row');
+
+    pickupYes.addEventListener('change', () => {
+      addressRow.style.display = 'table-row';
+    });
+
+    pickupNo.addEventListener('change', () => {
+      addressRow.style.display = 'none';
+    });
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const from = document.getElementById('from').value;
       const to = document.getElementById('to').value;
       const date = document.getElementById('date').value;
       const seats = document.getElementById('seats').value;
-      const data = { from, to, date, seats };
+      const pickup = document.querySelector('input[name="pickup"]:checked').value;
+      const address = pickup === 'yes' ? document.getElementById('address').value : '';
+      const childSeat = document.querySelector('input[name="child-seat"]:checked').value;
+      const data = { from, to, date, seats, pickup, address, childSeat };
       const tg = window.Telegram.WebApp;
       await tg.sendData(JSON.stringify(data));
       tg.close();
