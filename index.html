@@ -15,6 +15,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      overflow-y: scroll;
     }
     form {
       display: flex;
@@ -24,7 +25,7 @@
     label {
       margin-top: 20px;
     }
-    input {
+    input[type="text"], input[type="date"] {
       margin-top: 10px;
       padding: 10px;
       font-size: 18px;
@@ -33,6 +34,10 @@
       border-radius: 5px;
       background-color: var(--tg-theme-bg-color);
       color: var(--tg-theme-text-color);
+    }
+    input[type="range"] {
+      margin-top: 10px;
+      width: 100%;
     }
     button {
       margin-top: 20px;
@@ -72,17 +77,8 @@
     <input type="date" id="date" name="date" placeholder="Выберите дату">
 
     <label for="seats">Количество мест:</label>
-    <input type="text" id="seats" name="seats" list="seats-list" placeholder="Выберите количество мест" value="1">
-    <datalist id="seats-list">
-      <option value="1">
-      <option value="2">
-      <option value="3">
-      <option value="4">
-      <option value="5">
-      <option value="6">
-      <option value="7">
-      <option value="8">
-    </datalist>
+    <input type="range" id="seats" name="seats" min="1" max="8" value="1">
+    <span id="seats-value">1</span>
 
     <table>
       <tr>
@@ -122,6 +118,8 @@
     const pickupYes = document.getElementById('pickup-yes');
     const pickupNo = document.getElementById('pickup-no');
     const addressRow = document.getElementById('address-row');
+    const seatsInput = document.getElementById('seats');
+    const seatsValue = document.getElementById('seats-value');
 
     pickupYes.addEventListener('change', () => {
       addressRow.style.display = 'table-row';
@@ -129,6 +127,10 @@
 
     pickupNo.addEventListener('change', () => {
       addressRow.style.display = 'none';
+    });
+
+    seatsInput.addEventListener('input', () => {
+      seatsValue.textContent = seatsInput.value;
     });
 
     form.addEventListener('submit', async (event) => {
