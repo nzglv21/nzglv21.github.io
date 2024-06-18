@@ -28,6 +28,9 @@
     }
     label {
       margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     input, textarea {
       margin-top: 10px;
@@ -48,6 +51,10 @@
       background-color: var(--tg-theme-button-color);
       color: var(--tg-theme-button-text-color);
       cursor: pointer;
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
     }
   </style>
 </head>
@@ -74,11 +81,15 @@
     <label for="message">Доп информация пользователю:</label>
     <textarea id="message" name="message" placeholder="Введите дополнительную информацию" required></textarea>
 
-    <label for="orders">Брать заказы находящиеся по пути?</label>
-    <input type="radio" id="orders-yes" name="orders" value="yes">
-    <label for="orders-yes">Да</label>
-    <input type="radio" id="orders-no" name="orders" value="no">
-    <label for="orders-no">Нет</label>
+    <label for="orders">
+      Брать заказы находящиеся по пути?
+      <div class="radio-group">
+        <input type="radio" id="orders-yes" name="orders" value="yes">
+        <label for="orders-yes">Да</label>
+        <input type="radio" id="orders-no" name="orders" value="no">
+        <label for="orders-no">Нет</label>
+      </div>
+    </label>
 
     <button type="submit">Отправить</button>
   </form>
