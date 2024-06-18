@@ -104,7 +104,9 @@
       }
       await tg.sendData(JSON.stringify(data))
       await tg.close();
+      
     });
+    Telegram.WebApp.ready();
   </script>
 </body>
 </html>
