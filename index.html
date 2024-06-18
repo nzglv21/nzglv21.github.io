@@ -85,6 +85,8 @@
       $("#phone-number").mask("+7 999 999-99-99");
     });
 
+    let tg = window.Telegram.WebApp;
+
     const form = document.getElementById('registration-form');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -92,13 +94,15 @@
       const phoneNumber = document.getElementById('phone-number').value;
       const licensePlate = document.getElementById('license-plate').value;
       const carDescription = document.getElementById('car-description').value;
-      const formData = new FormData();
-      formData.append('full_name', fullName);
-      formData.append('phone_number', phoneNumber);
-      formData.append('license_plate', licensePlate);
-      formData.append('car_description', carDescription);
-      await Telegram.WebApp.sendData(JSON.stringify(Object.fromEntries(formData)));
-      Telegram.WebApp.close();
+
+      let data = {
+        name: fullName,
+        phone: phoneNumber,
+        licensePlate: licensePlate,
+        carDescription: carDescription
+      }
+      tg.sendData(JSON.stringify(data))
+      tg.close();
     });
 
     Telegram.WebApp.ready();
