@@ -1,59 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Поиск заказов по пути</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Заявка на услугу</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
+      font-size: 18px;
+      background-color: var(--tg-theme-bg-color);
+      color: var(--tg-theme-text-color);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     form {
       display: flex;
       flex-direction: column;
-      width: 300px;
-      margin: 0 auto;
+      width: 100%;
     }
     label {
-      margin-top: 10px;
+      margin-top: 20px;
     }
     input {
-      margin-top: 5px;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
       margin-top: 10px;
       padding: 10px;
+      font-size: 18px;
+      height: 50px;
+      border: 1px solid var(--tg-theme-hint-color);
+      border-radius: 5px;
+      background-color: var(--tg-theme-bg-color);
+      color: var(--tg-theme-text-color);
+    }
+    button {
+      margin-top: 20px;
+      padding: 15px;
+      font-size: 18px;
       border: none;
       border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
+      background-color: var(--tg-theme-button-color);
+      color: var(--tg-theme-button-text-color);
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Поиск заказов по пути</h1>
-  <form id="search-form">
+  <form id="my-form">
     <label for="from">Откуда:</label>
-    <input type="text" id="from" name="from" required>
+    <input type="text" id="from" name="from" list="cities" placeholder="Введите город отправления">
+
     <label for="to">Куда:</label>
-    <input type="text" id="to" name="to" required>
+    <input type="text" id="to" name="to" list="cities" placeholder="Введите город назначения">
+
+    <datalist id="cities">
+      <option value="Аскарово">
+      <option value="Уфа">
+      <option value="Магнитогорск">
+    </datalist>
+
     <label for="date">Дата:</label>
-    <input type="date" id="date" name="date" required>
-    <button type="submit">Найти</button>
+    <input type="date" id="date" name="date" placeholder="Выберите дату">
+
+    <button type="submit">Отправить</button>
   </form>
   <script>
-    const form = document.getElementById('search-form');
+    const form = document.getElementById('my-form');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const from = document.getElementById('from').value;
       const to = document.getElementById('to').value;
       const date = document.getElementById('date').value;
-      const response = await fetch(`/api/orders?from=${from}&to=${to}&date=${date}`);
-      const orders = await response.json();
-      // Отображение списка заказов на странице
+      const data = { from, to, date };
+      const tg = window.Telegram.WebApp;
+      await tg.sendData(JSON.stringify(data));
+      tg.close();
     });
+    Telegram.WebApp.ready();
   </script>
 </body>
 </html>
