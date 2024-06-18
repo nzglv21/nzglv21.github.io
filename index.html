@@ -54,10 +54,10 @@
 <body>
   <form id="my-form">
     <label for="from">Откуда:</label>
-    <input type="text" id="from" name="from" list="cities">
+    <input type="text" id="from" name="from" list="cities" placeholder="Введите город отправления">
 
     <label for="to">Куда:</label>
-    <input type="text" id="to" name="to" list="cities">
+    <input type="text" id="to" name="to" list="cities" placeholder="Введите город назначения">
 
     <datalist id="cities">
       <option value="Город1">
@@ -66,13 +66,19 @@
     </datalist>
 
     <label for="date">Дата:</label>
-    <input type="date" id="date" name="date">
+    <input type="date" id="date" name="date" placeholder="Выберите дату">
 
     <label for="time">Время:</label>
-    <input type="time" id="time" name="time" step="1800">
+    <input type="time" id="time" name="time" step="1800" placeholder="Выберите время">
 
     <label for="message">Доп информация пользователю:</label>
-    <textarea id="message" name="message" placeholder="Введите сообщение" required></textarea>
+    <textarea id="message" name="message" placeholder="Введите дополнительную информацию" required></textarea>
+
+    <label for="orders">Брать заказы находящиеся по пути?</label>
+    <input type="radio" id="orders-yes" name="orders" value="yes">
+    <label for="orders-yes">Да</label>
+    <input type="radio" id="orders-no" name="orders" value="no">
+    <label for="orders-no">Нет</label>
 
     <button type="submit">Отправить</button>
   </form>
@@ -85,7 +91,8 @@
       const date = document.getElementById('date').value;
       const time = document.getElementById('time').value;
       const message = document.getElementById('message').value;
-      const data = { from, to, date, time, message };
+      const orders = document.querySelector('input[name="orders"]:checked').value;
+      const data = { from, to, date, time, message, orders };
       const tg = window.Telegram.WebApp;
       await tg.sendData(JSON.stringify(data));
       tg.close();
