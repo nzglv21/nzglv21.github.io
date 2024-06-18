@@ -136,6 +136,7 @@
       }).then(function(response) {
         // Передача данных заказа в бота с помощью Telegram WebApp API
         Telegram.WebApp.sendData(JSON.stringify(Object.fromEntries(data)));
+        Telegram.WebApp.close();
       });
     });
   </script>
