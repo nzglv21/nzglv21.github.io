@@ -14,7 +14,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
     }
     form {
       display: flex;
@@ -64,7 +64,7 @@
     <input type="date" id="date" name="date" placeholder="Выберите дату">
 
     <label for="seats">Количество мест:</label>
-    <input type="text" id="seats" name="seats" list="seats-list" placeholder="Выберите количество мест">
+    <input type="text" id="seats" name="seats" list="seats-list" placeholder="Выберите количество мест" value="1">
     <datalist id="seats-list">
       <option value="1">
       <option value="2">
@@ -92,6 +92,14 @@
       tg.close();
     });
     Telegram.WebApp.ready();
+
+    // Close keyboard on submit
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        document.activeElement.blur();
+      }
+    });
   </script>
 </body>
 </html>
