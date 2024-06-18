@@ -95,17 +95,16 @@
       const licensePlate = document.getElementById('license-plate').value;
       const carDescription = document.getElementById('car-description').value;
 
+      
       let data = {
         name: fullName,
         phone: phoneNumber,
         licensePlate: licensePlate,
         carDescription: carDescription
       }
-      tg.sendData(JSON.stringify(data))
-      tg.close();
+      await tg.sendData(JSON.stringify(data))
+      await tg.close();
     });
-
-    Telegram.WebApp.ready();
   </script>
 </body>
 </html>
