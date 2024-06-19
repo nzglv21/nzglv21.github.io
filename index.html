@@ -17,18 +17,23 @@
       min-height: 100vh;
       overflow-y: scroll;
     }
-    input[list]::-webkit-calendar-picker-indicator {
-        width: 10%;
-        height: 3em;
-        cursor: pointer;
-        color: var(--tg-theme-button-color);
-        background-color: var(--tg-theme-button-color);
-      }
-
-      /* Изменяем цвет кнопки списка при наведении мыши */
-      input[list]:hover::-webkit-calendar-picker-indicator {
-        background-color: #ccc;
-      }
+    select {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid var(--tg-theme-hint-color);
+  border-radius: 5px;
+  background-color: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+  margin-top: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23666" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 24px;
+}
     form {
       display: flex;
       flex-direction: column;
