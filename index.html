@@ -17,18 +17,18 @@
       min-height: 100vh;
       overflow-y: scroll;
     }
-      input[list]::-webkit-calendar-picker-indicator {
-        width: 2em;
-        height: 2em;
+    input[list]::-webkit-calendar-picker-indicator {
+        width: 10%;
+        height: 3em;
         cursor: pointer;
-        background-color: #f0f0f0;
-        border: 1px solid #ccc;
-        border-radius: 50%;
-        color: #333;
-        font-size: 1em;
-        margin: 0;
-        padding: 0;
-    }
+        color: var(--tg-theme-button-color);
+        background-color: var(--tg-theme-button-color);
+      }
+
+      /* Изменяем цвет кнопки списка при наведении мыши */
+      input[list]:hover::-webkit-calendar-picker-indicator {
+        background-color: #ccc;
+      }
     form {
       display: flex;
       flex-direction: column;
