@@ -84,10 +84,12 @@
 <body>
   <form id="my-form">
     <label for="from">Откуда:</label>
-    <input type="text" id="from" name="from" list="cities" autocomplete="on">
+    <input type="text" id="from" name="from" oninput="autocomplete(this)">
+    <datalist id="from-suggestions"></datalist>
 
     <label for="to">Куда:</label>
-    <input type="text" id="to" name="to" list="cities" autocomplete="on">
+    <input type="text" id="to" name="to" oninput="autocomplete(this)">
+    <datalist id="to-suggestions"></datalist>
 
     <label for="date">Дата:</label>
     <input type="date" id="date" name="date" placeholder="Выберите дату" required>
@@ -131,27 +133,21 @@
     <div class="footer"></div>
   </form>
 
-  <datalist id="cities">
-    <option value="Аскарово">
-    <option value="Уфа">
-    <option value="Аэропорт (Уфа)">
-    <option value="Магнитогорск">
-    <option value="Сибай">
-    <option value="Красная Башкирия">
-    <option value="Банное">
-    <option value="Казмашево">
-    <option value="Амангильдино">
-    <option value="Утяганово">
-    <option value="Бурангулово">
-    <option value="Узянбаш">
-    <option value="Шигаево">
-    <option value="Серменево">
-    <option value="Инзер">
-    <option value="Покровка">
-    <option value="Абзаково">
-  </datalist>
-
   <script>
+    const cities = ["Аскарово", "Уфа", "Аэропорт (Уфа)", "Магнитогорск", "Сибай", "Красная Башкирия", "Банное", "Казмашево", "Амангильдино", "Утяганово", "Бурангулово", "Узянбаш", "Шигаево", "Серменево", "Инзер", "Покровка", "Абзаково"];
+
+    function autocomplete(input) {
+      const value = input.value.toLowerCase();
+      const suggestions = cities.filter(city => city.toLowerCase().startsWith(value));
+      const datalist = input.nextElementSibling;
+      datalist.innerHTML = "";
+      suggestions.forEach(city => {
+        const option = document.createElement("option");
+        option.value = city;
+        datalist.appendChild(option);
+      });
+    }
+
     const form = document.getElementById('my-form');
     const pickupYes = document.getElementById('pickup-yes');
     const pickupNo = document.getElementById('pickup-no');
@@ -196,4 +192,5 @@
     });
   </script>
 </body>
+
 </html>
