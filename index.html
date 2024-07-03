@@ -84,48 +84,10 @@
 <body>
   <form id="my-form">
     <label for="from">Откуда:</label>
-    <select id="from" name="from">
-      <option value="">Выберите город отправления</option>
-      <option value="Аскарово">Аскарово</option>
-      <option value="Уфа">Уфа</option>
-      <option value="Аэропорт (Уфа)">Аэропорт (Уфа)</option>
-      <option value="Магнитогорск">Магнитогорск</option>
-      <option value="Сибай">Сибай</option>
-      <option value="Красная Башкирия">Красная Башкирия</option>
-      <option value="Банное">Банное</option>
-      <option value="Казмашево">Казмашево</option>
-      <option value="Амангильдино">Амангильдино</option>
-      <option value="Утяганово">Утяганово</option>
-      <option value="Бурангулово">Бурангулово</option>
-      <option value="Узянбаш">Узянбаш</option>
-      <option value="Шигаево">Шигаево</option>
-      <option value="Серменево">Серменево</option>
-      <option value="Инзер">Инзер</option>
-      <option value="Покровка">Покровка</option>
-      <option value="Абзаково">Абзаково</option>
-    </select>
+    <input type="text" id="from" name="from" list="cities">
 
     <label for="to">Куда:</label>
-    <select id="to" name="to">
-      <option value="">Выберите город прибытия</option>
-      <option value="Аскарово">Аскарово</option>
-      <option value="Уфа">Уфа</option>
-      <option value="Аэропорт (Уфа)">Аэропорт (Уфа)</option>
-      <option value="Магнитогорск">Магнитогорск</option>
-      <option value="Сибай">Сибай</option>
-      <option value="Красная Башкирия">Красная Башкирия</option>
-      <option value="Банное">Банное</option>
-      <option value="Казмашево">Казмашево</option>
-      <option value="Амангильдино">Амангильдино</option>
-      <option value="Утяганово">Утяганово</option>
-      <option value="Бурангулово">Бурангулово</option>
-      <option value="Узянбаш">Узянбаш</option>
-      <option value="Шигаево">Шигаево</option>
-      <option value="Серменево">Серменево</option>
-      <option value="Инзер">Инзер</option>
-      <option value="Покровка">Покровка</option>
-      <option value="Абзаково">Абзаково</option>
-    </select>
+    <input type="text" id="to" name="to" list="cities">
 
     <label for="date">Дата:</label>
     <input type="date" id="date" name="date" placeholder="Выберите дату" required>
@@ -168,6 +130,27 @@
     <button type="submit">Отправить</button>
     <div class="footer"></div>
   </form>
+
+  <datalist id="cities">
+    <option value="Аскарово">
+    <option value="Уфа">
+    <option value="Аэропорт (Уфа)">
+    <option value="Магнитогорск">
+    <option value="Сибай">
+    <option value="Красная Башкирия">
+    <option value="Банное">
+    <option value="Казмашево">
+    <option value="Амангильдино">
+    <option value="Утяганово">
+    <option value="Бурангулово">
+    <option value="Узянбаш">
+    <option value="Шигаево">
+    <option value="Серменево">
+    <option value="Инзер">
+    <option value="Покровка">
+    <option value="Абзаково">
+  </datalist>
+
   <script>
     const form = document.getElementById('my-form');
     const pickupYes = document.getElementById('pickup-yes');
