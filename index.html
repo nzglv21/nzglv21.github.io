@@ -16,8 +16,9 @@
         }
         #send-location-btn {
             position: absolute; /* Абсолютное позиционирование на карте */
-            top: 20px; /* Отступ сверху */
-            right: 20px; /* Отступ справа */
+            bottom: 20px; /* Отступ снизу */
+            left: 50%; /* Центрировать кнопку по горизонтали */
+            transform: translateX(-50%); /* Смещение для центрирования */
             z-index: 1000;
             background-color: #0088cc; /* Цвет кнопки Telegram */
             color: white;
@@ -69,7 +70,7 @@
             navigator.geolocation.getCurrentPosition(function(position) {
                 const userCoords = [position.coords.latitude, position.coords.longitude];
                 userMarker = L.marker(userCoords).addTo(map).bindPopup('Вы здесь!').openPopup();
-                map.setView(userCoords, 19); // Центрируем карту на пользователе
+                map.setView(userCoords, 13); // Центрируем карту на пользователе
             });
         }
 
