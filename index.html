@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telegram WebApp Geolocation</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
         #map {
-            height: 100vh;
+            height: 100vh; /* Высота карты на весь экран */
             position: relative; /* Для позиционирования кнопки */
         }
         #send-location-btn {
@@ -30,23 +31,47 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
             transition: background-color 0.3s; /* Плавный переход цвета */
         }
+        /* Стили для мобильных устройств */
+        @media (max-width: 600px) {
+            #send-location-btn {
+                width: 80%; /* Ширина кнопки на мобильных устройствах */
+                font-size: 16px; /* Размер шрифта на мобильных устройствах */
+            }
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <button id="send-location-btn">Отправить геопозицию</button>
+    <button id="send-location-btn">Отправить конечные координаты</button>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        // Функция для извлечения параметров из URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                startLatitude: parseFloat(params.get('startLatitude')), // Извлечение параметра startLatitude
+                startLongitude: parseFloat(params.get('startLongitude')), // Извлечение параметра startLongitude
+                endLatitude: parseFloat(params.get('endLatitude')), // Извлечение параметра endLatitude
+                endLongitude: parseFloat(params.get('endLongitude')) // Извлечение параметра endLongitude
+            };
+        }
+
+        // Получаем параметры
+        const queryParams = getQueryParams();
+        const startCoords = [queryParams.startLatitude, queryParams.startLongitude];
+        const endCoords = [queryParams.endLatitude, queryParams.endLongitude];
+        console.log('Начальные координаты:', startCoords);
+        console.log('Конечные координаты:', endCoords);
+
         // Инициализация WebApp Telegram
         const tg = window.Telegram.WebApp;
         tg.expand(); // Разворачиваем WebApp на весь экран
 
-        // Инициализация карты без управления масштабом
-        const map = L.map('map', {
-            zoomControl: false // Убираем кнопку изменения масштаба
-        }).setView([51.505, -0.09], 19); // Устанавливаем максимальное начальное приближение
+        // Инициализация карты
+        const map = L.map('map').setView(endCoords, 15); // Устанавливаем центр на конечные координаты
 
         // Добавляем OpenStreetMap слой
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -54,49 +79,36 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Устанавливаем иконку для центра карты
-        const centerIcon = L.icon({
-            iconUrl: 'https://твой-подарок.рф/image/catalog/2018/2019/1186fa08fc35f3c3a84eec7a5aa99f81.png',
-            iconSize: [30, 30], // Размер иконки
-            iconAnchor: [15, 30], // Точка, которая будет находиться в основании маркера
-        });
+        // Создаем маркер для начальной точки
+        const startMarker = L.marker(startCoords).addTo(map).bindPopup('Начальная точка').openPopup();
 
-        // Красный маркер в центре карты
-        const centerMarker = L.marker(map.getCenter(), { icon: centerIcon }).addTo(map);
+        // Создаем маркер для конечной точки
+        const endMarker = L.marker(endCoords).addTo(map).bindPopup('Конечная точка').openPopup().addTo(map);
 
-        // Геолокация пользователя
-        let userMarker;
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                const userCoords = [position.coords.latitude, position.coords.longitude];
-                userMarker = L.marker(userCoords).addTo(map).bindPopup('Вы здесь!').openPopup();
-                map.setView(userCoords, 13); // Центрируем карту на пользователе
-            });
-        }
+        // Центрируем карту на конечной точке
+        map.setView(endCoords, 15);
 
-        // Обновляем маркер в центре карты
-        map.on('move', function() {
-            const center = map.getCenter();
-            centerMarker.setLatLng(center);
-        });
+        // Создаем маршрут между начальной и конечной точками
+        const control = L.Routing.control({
+            waypoints: [
+                L.latLng(startCoords[0], startCoords[1]),
+                L.latLng(endCoords[0], endCoords[1])
+            ],
+            routeWhileDragging: true // Обновляем маршрут во время перетаскивания
+        }).addTo(map);
 
-        // Получаем текущую тему пользователя
-        const isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        // Установка цвета кнопки в зависимости от темы
-        const sendLocationButton = document.getElementById('send-location-btn');
-        sendLocationButton.style.backgroundColor = isDarkTheme ? '#0077b3' : '#0088cc'; // Цвет для темной темы
-
-        // Кнопка отправки геопозиции
-        sendLocationButton.addEventListener('click', function() {
-            const center = map.getCenter();
-            const latitude = center.lat;
-            const longitude = center.lng;
-
-            // Отправляем геопозицию в Telegram через WebApp
+        // Кнопка отправки конечной координаты
+        document.getElementById('send-location-btn').addEventListener('click', function() {
+            // Отправляем конечные координаты в Telegram через WebApp
             tg.sendData(JSON.stringify({
-                latitude: latitude,
-                longitude: longitude
+                start: {
+                    latitude: startCoords[0],
+                    longitude: startCoords[1]
+                },
+                end: {
+                    latitude: endCoords[0],
+                    longitude: endCoords[1]
+                }
             }));
 
             tg.close(); // Закрываем WebApp
