@@ -9,36 +9,25 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0; /* Светлый фон */
         }
         #map {
-            height: calc(100vh - 60px); /* Уменьшаем высоту карты, чтобы оставить место для кнопки */
+            height: 100vh;
+            position: relative; /* Для позиционирования кнопки */
         }
         #send-location-btn {
-            position: fixed; /* Фиксированное положение */
-            bottom: 10px; /* Отступ снизу */
-            left: 50%; /* Центрировать кнопку по горизонтали */
-            transform: translateX(-50%); /* Смещение для центрирования */
+            position: absolute; /* Абсолютное позиционирование на карте */
+            top: 20px; /* Отступ сверху */
+            right: 20px; /* Отступ справа */
             z-index: 1000;
             background-color: #0088cc; /* Цвет кнопки Telegram */
             color: white;
-            padding: 15px 30px; /* Увеличение padding для кнопки */
+            padding: 15px 25px; /* Увеличение padding для кнопки */
             border: none;
-            border-radius: 30px; /* Закругленные углы */
+            border-radius: 30px; /* Закругленные углы для кнопки */
             font-size: 18px; /* Размер шрифта */
             cursor: pointer; /* Указатель курсора */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
             transition: background-color 0.3s; /* Плавный переход цвета */
-        }
-        #send-location-btn:hover {
-            background-color: #007bb5; /* Темнее при наведении */
-        }
-        /* Адаптация для мобильных устройств */
-        @media (max-width: 600px) {
-            #send-location-btn {
-                width: 90%; /* Ширина кнопки на мобильных устройствах */
-                font-size: 16px; /* Размер шрифта для мобильных */
-            }
         }
     </style>
 </head>
@@ -56,7 +45,7 @@
         // Инициализация карты без управления масштабом
         const map = L.map('map', {
             zoomControl: false // Убираем кнопку изменения масштаба
-        }).setView([51.505, -0.09], 18); // Устанавливаем начальное приближение 18 (максимальное для OSM)
+        }).setView([51.505, -0.09], 19); // Устанавливаем максимальное начальное приближение
 
         // Добавляем OpenStreetMap слой
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -90,8 +79,15 @@
             centerMarker.setLatLng(center);
         });
 
+        // Получаем текущую тему пользователя
+        const isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        // Установка цвета кнопки в зависимости от темы
+        const sendLocationButton = document.getElementById('send-location-btn');
+        sendLocationButton.style.backgroundColor = isDarkTheme ? '#0077b3' : '#0088cc'; // Цвет для темной темы
+
         // Кнопка отправки геопозиции
-        document.getElementById('send-location-btn').addEventListener('click', function() {
+        sendLocationButton.addEventListener('click', function() {
             const center = map.getCenter();
             const latitude = center.lat;
             const longitude = center.lng;
