@@ -6,22 +6,39 @@
     <title>Telegram WebApp Geolocation</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Светлый фон */
+        }
         #map {
-            height: 100vh;
+            height: calc(100vh - 60px); /* Уменьшаем высоту карты, чтобы оставить место для кнопки */
         }
         #send-location-btn {
             position: fixed; /* Фиксированное положение */
-            bottom: 20px; /* Отступ снизу */
+            bottom: 10px; /* Отступ снизу */
             left: 50%; /* Центрировать кнопку по горизонтали */
             transform: translateX(-50%); /* Смещение для центрирования */
             z-index: 1000;
-            background-color: #0088cc;
+            background-color: #0088cc; /* Цвет кнопки Telegram */
             color: white;
-            padding: 10px 20px; /* Увеличение padding для кнопки */
+            padding: 15px 30px; /* Увеличение padding для кнопки */
             border: none;
-            border-radius: 5px;
-            font-size: 16px; /* Размер шрифта */
+            border-radius: 30px; /* Закругленные углы */
+            font-size: 18px; /* Размер шрифта */
             cursor: pointer; /* Указатель курсора */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
+            transition: background-color 0.3s; /* Плавный переход цвета */
+        }
+        #send-location-btn:hover {
+            background-color: #007bb5; /* Темнее при наведении */
+        }
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 600px) {
+            #send-location-btn {
+                width: 90%; /* Ширина кнопки на мобильных устройствах */
+                font-size: 16px; /* Размер шрифта для мобильных */
+            }
         }
     </style>
 </head>
@@ -36,8 +53,10 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); // Разворачиваем WebApp на весь экран
 
-        // Инициализация карты
-        const map = L.map('map').setView([51.505, -0.09], 13); // начальная точка карты
+        // Инициализация карты без управления масштабом
+        const map = L.map('map', {
+            zoomControl: false // Убираем кнопку изменения масштаба
+        }).setView([51.505, -0.09], 18); // Устанавливаем начальное приближение 18 (максимальное для OSM)
 
         // Добавляем OpenStreetMap слой
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -61,7 +80,7 @@
             navigator.geolocation.getCurrentPosition(function(position) {
                 const userCoords = [position.coords.latitude, position.coords.longitude];
                 userMarker = L.marker(userCoords).addTo(map).bindPopup('Вы здесь!').openPopup();
-                map.setView(userCoords, 13); // центрируем карту на пользователе
+                map.setView(userCoords, 13); // Центрируем карту на пользователе
             });
         }
 
