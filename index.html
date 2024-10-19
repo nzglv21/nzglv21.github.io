@@ -20,10 +20,24 @@
             border: none;
             border-radius: 5px;
         }
+        .center-marker {
+            position: absolute;
+            background-color: red;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 3px solid white;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease-out;
+        }
+        .center-marker.lift {
+            transform: translate(-50%, -50%) scale(1.2); /* Поднимаем метку */
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <div class="center-marker" id="center-marker"></div>
     <button id="send-location-btn">Отправить геопозицию</button>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -41,16 +55,22 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Маркер в центре карты
-        let centerMarker = L.marker(map.getCenter()).addTo(map);
+        // Маркер в центре (красный, стилизованный)
+        const centerMarker = document.getElementById('center-marker');
 
-        // Функция обновления маркера в центре
-        function updateCenterMarker() {
-            const center = map.getCenter();
-            centerMarker.setLatLng(center);
+        // Функция для анимации метки при начале движения карты
+        function liftMarker() {
+            centerMarker.classList.add('lift');
         }
 
-        map.on('move', updateCenterMarker); // обновляем маркер при перемещении карты
+        // Функция для возврата метки в исходное состояние после завершения движения карты
+        function dropMarker() {
+            centerMarker.classList.remove('lift');
+        }
+
+        // Подписываемся на события движения карты
+        map.on('movestart', liftMarker); // Поднимаем метку при начале движения карты
+        map.on('moveend', dropMarker);   // Опускаем метку при завершении движения карты
 
         // Геолокация пользователя
         let userMarker;
