@@ -83,7 +83,17 @@
         const startMarker = L.marker(startCoords).addTo(map).bindPopup('Начальная точка').openPopup();
 
         // Создаем маркер для конечной точки
-        const endMarker = L.marker(endCoords).addTo(map).bindPopup('Конечная точка').openPopup().addTo(map);
+        const endMarker = L.marker(endCoords).addTo(map).bindPopup('Конечная точка').openPopup();
+
+        // Создаем маркер для центра карты
+        const centerMarker = L.marker(map.getCenter(), {
+            icon: L.icon({
+                iconUrl: 'https://example.com/path/to/your/center-marker-icon.png', // Замените на свой URL иконки
+                iconSize: [32, 32], // Размер иконки
+                iconAnchor: [16, 32], // Точка привязки иконки
+                popupAnchor: [0, -32] // Точка привязки всплывающего окна
+            })
+        }).addTo(map);
 
         // Центрируем карту на конечной точке
         map.setView(endCoords, 15);
@@ -96,6 +106,11 @@
             ],
             routeWhileDragging: true // Обновляем маршрут во время перетаскивания
         }).addTo(map);
+
+        // Обновляем позицию маркера центра при изменении центра карты
+        map.on('moveend', function() {
+            centerMarker.setLatLng(map.getCenter());
+        });
 
         // Кнопка отправки конечной координаты
         document.getElementById('send-location-btn').addEventListener('click', function() {
