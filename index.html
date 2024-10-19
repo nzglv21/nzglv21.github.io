@@ -69,7 +69,7 @@
             navigator.geolocation.getCurrentPosition(function(position) {
                 const userCoords = [position.coords.latitude, position.coords.longitude];
                 userMarker = L.marker(userCoords).addTo(map).bindPopup('Вы здесь!').openPopup();
-                map.setView(userCoords, 13); // Центрируем карту на пользователе
+                map.setView(userCoords, 16); // Центрируем карту на пользователе
             });
         }
 
