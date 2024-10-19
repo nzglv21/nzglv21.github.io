@@ -10,34 +10,23 @@
             height: 100vh;
         }
         #send-location-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            position: fixed; /* Фиксированное положение */
+            bottom: 20px; /* Отступ снизу */
+            left: 50%; /* Центрировать кнопку по горизонтали */
+            transform: translateX(-50%); /* Смещение для центрирования */
             z-index: 1000;
             background-color: #0088cc;
             color: white;
-            padding: 10px;
+            padding: 10px 20px; /* Увеличение padding для кнопки */
             border: none;
             border-radius: 5px;
-        }
-        .center-marker {
-            position: absolute;
-            background-color: red;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 3px solid white;
-            transform: translate(-50%, -50%);
-            transition: transform 0.2s ease-out;
-        }
-        .center-marker.lift {
-            transform: translate(-50%, -50%) scale(1.2); /* Поднимаем метку */
+            font-size: 16px; /* Размер шрифта */
+            cursor: pointer; /* Указатель курсора */
         }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <div class="center-marker" id="center-marker"></div>
     <button id="send-location-btn">Отправить геопозицию</button>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -52,25 +41,19 @@
 
         // Добавляем OpenStreetMap слой
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Маркер в центре (красный, стилизованный)
-        const centerMarker = document.getElementById('center-marker');
+        // Устанавливаем иконку для центра карты
+        const centerIcon = L.icon({
+            iconUrl: 'https://твой-подарок.рф/image/catalog/2018/2019/1186fa08fc35f3c3a84eec7a5aa99f81.png',
+            iconSize: [30, 30], // Размер иконки
+            iconAnchor: [15, 30], // Точка, которая будет находиться в основании маркера
+        });
 
-        // Функция для анимации метки при начале движения карты
-        function liftMarker() {
-            centerMarker.classList.add('lift');
-        }
-
-        // Функция для возврата метки в исходное состояние после завершения движения карты
-        function dropMarker() {
-            centerMarker.classList.remove('lift');
-        }
-
-        // Подписываемся на события движения карты
-        map.on('movestart', liftMarker); // Поднимаем метку при начале движения карты
-        map.on('moveend', dropMarker);   // Опускаем метку при завершении движения карты
+        // Красный маркер в центре карты
+        const centerMarker = L.marker(map.getCenter(), { icon: centerIcon }).addTo(map);
 
         // Геолокация пользователя
         let userMarker;
@@ -81,6 +64,12 @@
                 map.setView(userCoords, 13); // центрируем карту на пользователе
             });
         }
+
+        // Обновляем маркер в центре карты
+        map.on('move', function() {
+            const center = map.getCenter();
+            centerMarker.setLatLng(center);
+        });
 
         // Кнопка отправки геопозиции
         document.getElementById('send-location-btn').addEventListener('click', function() {
