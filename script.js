@@ -6,7 +6,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // 2GIS Suggest API
 const API_KEY = '6a316891-62f1-4a10-a610-8217e3773c91'; // Замените на ваш API-ключ 2GIS
-const suggestEndpoint = 'https://catalog.api.2gis.com/3.0/suggest';
+const suggestEndpoint = 'https://catalog.api.2gis.com/3.0/suggests';
 
 const pickupInput = document.getElementById('pickup');
 const dropoffInput = document.getElementById('dropoff');
@@ -14,7 +14,7 @@ const dropoffInput = document.getElementById('dropoff');
 // Функция для отправки запросов
 function sendRequest(query, onSuccess, onError) {
     const xhr = new XMLHttpRequest();
-    const url = `${suggestEndpoint}?q=${encodeURIComponent(query)}&key=${API_KEY}`;
+    const url = `${suggestEndpoint}?q=${encodeURIComponent(query)}&suggest_type=route_endpoint&key=${API_KEY}`;
 
     xhr.open('GET', url, true);
 
@@ -28,7 +28,7 @@ function sendRequest(query, onSuccess, onError) {
                     onError('Ошибка парсинга ответа: ' + e.message);
                 }
             } else {
-                onError(`Ошибка запроса: статус ${xhr.status}`);
+                onError(`Ошибка запроса: статус ${xhr.status}, ответ: ${xhr.responseText}`);
             }
         }
     };
@@ -48,10 +48,10 @@ function sendRequest(query, onSuccess, onError) {
             sendRequest(
                 query,
                 (data) => {
-                    console.log('Успешный ответ:', data); // Вывод ответа для проверки
+                    console.log('Успешный ответ:', data); // Здесь можно обрабатывать и выводить подсказки
                 },
                 (error) => {
-                    console.error(error); // Вывод ошибки
+                    console.error(error);
                 }
             );
         }
