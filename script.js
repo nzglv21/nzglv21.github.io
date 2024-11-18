@@ -10,11 +10,12 @@ const suggestEndpoint = 'https://catalog.api.2gis.com/3.0/suggests';
 
 const pickupInput = document.getElementById('pickup');
 const dropoffInput = document.getElementById('dropoff');
+const suggestionContainer = document.getElementById('suggestions'); // Контейнер для подсказок
 
 // Функция для отправки запросов
 function sendRequest(query, onSuccess, onError) {
     const xhr = new XMLHttpRequest();
-    const url = `${suggestEndpoint}?q=${query}&suggest_type=route_endpoint&key=${API_KEY}`;
+    const url = `${suggestEndpoint}?q=${encodeURIComponent(query)}&suggest_type=route_endpoint&key=${API_KEY}`;
 
     xhr.open('GET', url, true);
 
@@ -40,6 +41,24 @@ function sendRequest(query, onSuccess, onError) {
     xhr.send();
 }
 
+// Отображение подсказок
+function displaySuggestions(data, inputElement) {
+    suggestionContainer.innerHTML = ''; // Очистить контейнер
+
+    if (data.suggestions && data.suggestions.length > 0) {
+        data.suggestions.forEach((suggestion) => {
+            const suggestionItem = document.createElement('div');
+            suggestionItem.classList.add('suggestion-item');
+            suggestionItem.textContent = suggestion.value; // Адрес подсказки
+            suggestionItem.addEventListener('click', () => {
+                inputElement.value = suggestion.value; // Заполняем поле адресом
+                suggestionContainer.innerHTML = ''; // Очищаем подсказки
+            });
+            suggestionContainer.appendChild(suggestionItem);
+        });
+    }
+}
+
 // Обработка автозаполнения
 [pickupInput, dropoffInput].forEach((input) => {
     input.addEventListener('input', (e) => {
@@ -48,12 +67,15 @@ function sendRequest(query, onSuccess, onError) {
             sendRequest(
                 query,
                 (data) => {
-                    console.log('Успешный ответ:', data); // Здесь можно обрабатывать и выводить подсказки
+                    displaySuggestions(data, e.target); // Отображаем подсказки для соответствующего поля
                 },
                 (error) => {
                     console.error(error);
+                    suggestionContainer.innerHTML = ''; // Очищаем подсказки при ошибке
                 }
             );
+        } else {
+            suggestionContainer.innerHTML = ''; // Очищаем подсказки, если строка ввода короткая
         }
     });
 });
