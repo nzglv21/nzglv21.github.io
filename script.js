@@ -14,7 +14,7 @@ const dropoffInput = document.getElementById('dropoff');
 // Функция для отправки запросов
 function sendRequest(query, onSuccess, onError) {
     const xhr = new XMLHttpRequest();
-    const url = `${suggestEndpoint}?q=${encodeURIComponent(query)}&suggest_type=route_endpoint&key=${API_KEY}`;
+    const url = `${suggestEndpoint}?q=${query}&suggest_type=route_endpoint&key=${API_KEY}`;
 
     xhr.open('GET', url, true);
 
