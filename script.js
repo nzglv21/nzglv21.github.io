@@ -5,7 +5,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // 2GIS Suggest API
-const API_KEY = 'Ваш_ключ_2GIS'; // Замените на ваш API-ключ 2GIS
+const API_KEY = '6a316891-62f1-4a10-a610-8217e3773c91'; // Замените на ваш API-ключ 2GIS
 const suggestEndpoint = `https://catalog.api.2gis.com/3.0/suggest`;
 
 const pickupInput = document.getElementById('pickup');
