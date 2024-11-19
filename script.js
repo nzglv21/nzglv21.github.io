@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Функция для изменения метки и перемещения карты
     function updateFromMarker(lat, lon) {
         fromMarker.setLatLng([lat, lon]);  // обновляем позицию метки "Откуда"
+        document.getElementById('from').value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
     }
 
     // Функция для добавления или обновления метки конечного пункта (для "Куда")
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             toMarker = L.marker([lat, lon]).addTo(map); // если нет, создаем новую
             toMarker.bindPopup("Куда").openPopup();
         }
+        document.getElementById('to').value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
     }
 
     // Получаем координаты пользователя с использованием Geolocation API
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 
-                // Обновляем метку и карту
+                // Обновляем метку, поле "Откуда" и карту
                 updateFromMarker(lat, lon);
                 map.setView([lat, lon], 13); // Перемещаем карту в центр координат пользователя
             },
@@ -86,24 +88,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const center = map.getCenter();
         if (activeField === 'from') {
             updateFromMarker(center.lat, center.lng); // Обновляем метку "Откуда"
-            fromInput.value = `Lat: ${center.lat.toFixed(5)}, Lon: ${center.lng.toFixed(5)}`;
         } else if (activeField === 'to') {
             updateToMarker(center.lat, center.lng); // Обновляем метку "Куда"
-            toInput.value = `Lat: ${center.lat.toFixed(5)}, Lon: ${center.lng.toFixed(5)}`;
         }
     });
 
     // Обработчики кнопок "Карта"
     document.getElementById('map-btn-from').addEventListener('click', () => {
-        if (activeField === 'from') {
-            map.setView(fromMarker.getLatLng(), 13); // Перемещаем карту к метке "Откуда"
-        }
+        activeField = 'from'; // Устанавливаем флаг на "Откуда"
+        map.setView(fromMarker.getLatLng(), 13); // Перемещаем карту к метке "Откуда"
         formContainer.classList.remove('active'); // Скрываем форму
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
-        if (activeField === 'to') {
-            map.setView(toMarker.getLatLng(), 13); // Перемещаем карту к метке "Куда"
+        activeField = 'to'; // Устанавливаем флаг на "Куда"
+        if (toMarker) {
+            map.setView(toMarker.getLatLng()); // Перемещаем карту к метке "Куда"
+        } else {
+            const fromCoords = fromMarker.getLatLng();
+            map.setView([fromCoords.lat+0.001, fromCoords.lng+0.001]); // Если метка "Куда" ещё не создана, перемещаем карту к "Откуда"
         }
         formContainer.classList.remove('active'); // Скрываем форму
     });
