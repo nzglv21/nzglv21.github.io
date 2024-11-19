@@ -23,17 +23,19 @@ body, html {
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 20%; /* Изначальная высота */
     background-color: white;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
     z-index: 10;
-    transition: transform 0.3s ease-in-out;
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
 }
 
-/* Когда форма поднята */
+/* Когда форма поднимается */
 #form-container.active {
-    transform: translateY(-50%);
+    height: 80%; /* Расширяем до 80% экрана */
 }
 
 /* Содержимое формы */
@@ -41,7 +43,7 @@ body, html {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
 #form input, #form button {
