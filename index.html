@@ -1,33 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Заказ Такси</title>
-  <link rel="stylesheet" href="style.css">
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxi Order</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-  <div id="map"></div>
-  
-  <button id="open-form-btn">Заказать такси</button>
-
-  <div id="form-modal" class="hidden">
-    <div class="form-container">
-      <label for="from">Откуда:</label>
-      <input type="text" id="from" placeholder="Введите адрес">
-      
-      <label for="to">Куда:</label>
-      <input type="text" id="to" placeholder="Введите адрес">
-      
-      <button id="submit-btn">Подтвердить</button>
+    <div id="map"></div>
+    <button id="open-form-btn">Заказать такси</button>
+    <div id="form-container">
+        <div id="form">
+            <input type="text" id="from" placeholder="Откуда">
+            <input type="text" id="to" placeholder="Куда">
+            <button id="submit-btn">Заказать</button>
+        </div>
     </div>
-  </div>
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="script.js"></script>
-<script></script></body>
+    <script src="script.js"></script>
+</body>
 </html>
