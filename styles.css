@@ -23,7 +23,7 @@ body, html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 30%; /* Изначальная высота */
+    height: 50%; /* Изначальная высота для мобильных устройств */
     background-color: white;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -33,17 +33,17 @@ body, html {
     overflow: hidden;
 }
 
-/* Когда форма поднимается */
+/* Когда форма активна */
 #form-container.active {
-    height: 80%; /* Расширяем до 80% экрана */
+    height: 50%; /* Поддерживаем максимальную видимость на мобильных устройствах */
 }
 
 /* Содержимое формы */
 #form {
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     position: relative;
 }
 
@@ -70,7 +70,7 @@ body, html {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    padding: 10px 15px;
+    padding: 8px 12px;
     font-size: 14px;
     background-color: #007bff;
     color: white;
@@ -91,42 +91,22 @@ body, html {
 
 /* Адаптация для мобильных устройств */
 @media screen and (max-width: 768px) {
-    #form {
-        gap: 15px;
+    #form-container {
+        height: 50%; /* Форму не поднимаем выше 50% на мобильных */
     }
-#form .map-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 10px 15px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block; /* Кнопки всегда видны */
-}
 
+    #form {
+        gap: 12px;
+    }
+
+    #form .map-btn {
+        display: block; /* Кнопки всегда видны */
+        padding: 8px 12px;
+        font-size: 14px;
+    }
 
     #form button {
         font-size: 18px;
         padding: 14px;
     }
 }
-#form .map-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 10px 15px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block; /* Кнопки всегда видны */
-}
-
