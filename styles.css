@@ -44,6 +44,11 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    position: relative;
+}
+
+.input-container {
+    position: relative;
 }
 
 #form input, #form button {
@@ -59,6 +64,26 @@ body, html {
     cursor: pointer;
 }
 
+/* Стили для кнопок карты */
+#form .map-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none; /* Скрыто по умолчанию */
+}
+
+.input-container input.active-field + .map-btn {
+    display: block; /* Показываем кнопку только если поле активно */
+}
+
 /* Активное поле ввода с синей границей */
 #form input.active-field {
     border-color: #007bff;
@@ -69,9 +94,39 @@ body, html {
     #form {
         gap: 15px;
     }
+#form .map-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Кнопки всегда видны */
+}
+
 
     #form button {
         font-size: 18px;
         padding: 14px;
     }
 }
+#form .map-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Кнопки всегда видны */
+}
+

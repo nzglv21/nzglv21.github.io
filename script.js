@@ -63,10 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // При фокусе на поле "Откуда" или "Куда" меняем флаг и активируем нужное поле
     const fromInput = document.getElementById('from');
     const toInput = document.getElementById('to');
+    const formContainer = document.getElementById('form-container');
 
     fromInput.addEventListener('focus', () => {
         activeField = 'from';
         activateField('from');
+        formContainer.classList.add('active');  // Поднимаем контейнер
         const center = fromMarker.getLatLng(); // Получаем координаты метки "Откуда"
         map.setView([center.lat, center.lng], 13); // Перемещаем карту к метке "Откуда"
     });
@@ -74,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toInput.addEventListener('focus', () => {
         activeField = 'to';
         activateField('to');
+        formContainer.classList.add('active');  // Поднимаем контейнер
         const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng(); // Если метка "Куда" есть, используем ее, иначе - метку "Откуда"
         map.setView([center.lat, center.lng], 13); // Перемещаем карту к метке "Куда" (или "Откуда" если метки нет)
     });
@@ -90,34 +93,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Добавление метки конечного пункта по вводу в поле "Куда"
-    toInput.addEventListener('blur', () => {
-        const toValue = toInput.value;
-        if (toValue) {
-            const [lat, lon] = toValue.split(',').map(coord => parseFloat(coord.split(':')[1].trim()));
-            if (!isNaN(lat) && !isNaN(lon)) {
-                updateToMarker(lat, lon); // обновляем метку конечной точки
-            }
+    // Обработчики кнопок "Карта"
+    document.getElementById('map-btn-from').addEventListener('click', () => {
+        if (activeField === 'from') {
+            map.setView(fromMarker.getLatLng(), 13); // Перемещаем карту к метке "Откуда"
         }
+        formContainer.classList.remove('active'); // Скрываем форму
     });
 
-    // Поднимаем форму вверх при фокусе на поля
-    const formContainer = document.getElementById('form-container');
-    const inputs = document.querySelectorAll('#form input');
-
-    inputs.forEach(input => {
-        input.addEventListener('focus', () => {
-            formContainer.classList.add('active');
-        });
-
-        input.addEventListener('blur', () => {
-            // Сбрасываем форму вниз при отсутствии фокуса
-            setTimeout(() => {
-                if (![...inputs].some(inp => inp === document.activeElement)) {
-                    formContainer.classList.remove('active');
-                }
-            }, 200);
-        });
+    document.getElementById('map-btn-to').addEventListener('click', () => {
+        if (activeField === 'to') {
+            map.setView(toMarker.getLatLng(), 13); // Перемещаем карту к метке "Куда"
+        }
+        formContainer.classList.remove('active'); // Скрываем форму
     });
 
     // Обработка отправки формы
