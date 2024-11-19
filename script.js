@@ -5,18 +5,31 @@ document.addEventListener("DOMContentLoaded", () => {
         maxZoom: 19,
     }).addTo(map);
 
-    // Управление формой
-    const openFormBtn = document.getElementById('open-form-btn');
     const formContainer = document.getElementById('form-container');
+    const inputs = document.querySelectorAll('#form input');
 
-    openFormBtn.addEventListener('click', () => {
-        formContainer.style.bottom = formContainer.style.bottom === '0px' ? '-300px' : '0px';
+    // Поднимаем форму вверх при фокусе
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            formContainer.classList.add('active');
+        });
+
+        input.addEventListener('blur', () => {
+            // Сбрасываем форму вниз при отсутствии фокуса
+            setTimeout(() => {
+                if (![...inputs].some(inp => inp === document.activeElement)) {
+                    formContainer.classList.remove('active');
+                }
+            }, 200);
+        });
     });
 
+    // Обработка отправки формы
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.addEventListener('click', () => {
         const from = document.getElementById('from').value;
         const to = document.getElementById('to').value;
         alert(`Заказ оформлен: \nОткуда: ${from}\nКуда: ${to}`);
+        formContainer.classList.remove('active');
     });
 });
