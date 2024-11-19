@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Инициализация метки начальной точки (поле "Откуда")
     let fromMarker = L.marker([55.751244, 37.618423], { draggable: true }).addTo(map); // начальная метка в Москве
-    fromMarker.bindPopup("Откуда").openPopup();
+
 
     // Инициализация метки конечной точки (поле "Куда")
     let toMarker = null; // начальная метка для "Куда" еще не существует
@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
             toMarker.setLatLng([lat, lon]); // если метка уже существует, просто обновляем
         } else {
             toMarker = L.marker([lat, lon]).addTo(map); // если нет, создаем новую
-            toMarker.bindPopup("Куда").openPopup();
         }
         document.getElementById('to').value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
     }
