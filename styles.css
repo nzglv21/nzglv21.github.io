@@ -59,6 +59,11 @@ body, html {
     cursor: pointer;
 }
 
+/* Активное поле ввода с синей границей */
+#form input.active-field {
+    border-color: #007bff;
+}
+
 /* Адаптация для мобильных устройств */
 @media screen and (max-width: 768px) {
     #form {

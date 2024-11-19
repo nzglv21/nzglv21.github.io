@@ -5,13 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
         maxZoom: 19,
     }).addTo(map);
 
-    // Функция для установки метки на карте и перемещения к координатам
-    function setUserLocation(lat, lon) {
-        // Устанавливаем метку на текущие координаты
-        const marker = L.marker([lat, lon]).addTo(map);
-        
-        // Перемещаем карту в эти координаты
-        map.setView([lat, lon], 13);
+    // Переменная для хранения флага, который отслеживает, какое поле активно
+    let activeField = 'from'; // по умолчанию активен "Откуда"
+
+    // Инициализация метки
+    let userMarker = L.marker([55.751244, 37.618423], { draggable: true }).addTo(map); // начальная метка в Москве
+    userMarker.bindPopup("Ваша позиция").openPopup();
+
+    // Функция для изменения метки и перемещения карты
+    function updateUserMarker(lat, lon) {
+        userMarker.setLatLng([lat, lon]);  // обновляем позицию метки
     }
 
     // Получаем координаты пользователя с использованием Geolocation API
@@ -21,25 +24,60 @@ document.addEventListener("DOMContentLoaded", () => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 
-                // Устанавливаем метку и перемещаем карту
-                setUserLocation(lat, lon);
+                // Обновляем метку и карту
+                updateUserMarker(lat, lon);
+                map.setView([lat, lon], 13); // Перемещаем карту в центр координат пользователя
             },
             (error) => {
                 alert("Ошибка получения координат: " + error.message);
                 // Если не удалось получить координаты, ставим метку по умолчанию (Москва)
-                setUserLocation(55.751244, 37.618423);
+                updateUserMarker(55.751244, 37.618423);
             }
         );
     } else {
         alert("Геолокация не поддерживается этим браузером.");
         // Если геолокация не поддерживается, ставим метку по умолчанию (Москва)
-        setUserLocation(55.751244, 37.618423);
+        updateUserMarker(55.751244, 37.618423);
     }
 
+    // Функция для активации поля
+    function activateField(field) {
+        document.getElementById('from').classList.remove('active-field');
+        document.getElementById('to').classList.remove('active-field');
+        document.getElementById(field).classList.add('active-field');
+    }
+
+    // При фокусе на поле "Откуда" или "Куда" меняем флаг и активируем нужное поле
+    const fromInput = document.getElementById('from');
+    const toInput = document.getElementById('to');
+
+    fromInput.addEventListener('focus', () => {
+        activeField = 'from';
+        activateField('from');
+    });
+
+    toInput.addEventListener('focus', () => {
+        activeField = 'to';
+        activateField('to');
+    });
+
+    // При перемещении карты обновляем метку
+    map.on('move', () => {
+        const center = map.getCenter();
+        updateUserMarker(center.lat, center.lng);
+
+        // Обновляем значение поля в зависимости от того, какое поле активно
+        if (activeField === 'from') {
+            fromInput.value = `Lat: ${center.lat.toFixed(5)}, Lon: ${center.lng.toFixed(5)}`;
+        } else if (activeField === 'to') {
+            toInput.value = `Lat: ${center.lat.toFixed(5)}, Lon: ${center.lng.toFixed(5)}`;
+        }
+    });
+
+    // Поднимаем форму вверх при фокусе на поля
     const formContainer = document.getElementById('form-container');
     const inputs = document.querySelectorAll('#form input');
 
-    // Поднимаем форму вверх при фокусе
     inputs.forEach(input => {
         input.addEventListener('focus', () => {
             formContainer.classList.add('active');
