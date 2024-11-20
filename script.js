@@ -1,67 +1,108 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Инициализация карты OpenStreetMap
-    const map = L.map('map').setView([55.751244, 37.618423], 13); // начальная позиция (Москва)
+    const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
+    const defaultLocation = { lat: 55.751244, lon: 37.618423 }; // Москва, начальная точка
+    const map = L.map('map').setView([defaultLocation.lat, defaultLocation.lon], 13); // Москва
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
 
-    // Переменная для хранения флага, который отслеживает, какое поле активно
-    let activeField = 'from'; // по умолчанию активен "Откуда"
+    let activeField = 'from';
+    let fromMarker = L.marker([defaultLocation.lat, defaultLocation.lon], { draggable: true }).addTo(map);
+    let toMarker = null;
+    let isUserLocationSet = false;
 
-    // Инициализация метки начальной точки (поле "Откуда")
-    let fromMarker = L.marker([55.751244, 37.618423], { draggable: true }).addTo(map); // начальная метка в Москве
+    let typingTimeout;
 
+    const delay = 1500; // Задержка в миллисекундах
 
-    // Инициализация метки конечной точки (поле "Куда")
-    let toMarker = null; // начальная метка для "Куда" еще не существует
+    function updateFromMarker(lat, lon, isUserLocation = false) {
+        const fromInput = document.getElementById('from');
+        fromMarker.setLatLng([lat, lon]);
 
-    // Функция для изменения метки и перемещения карты
-    function updateFromMarker(lat, lon) {
-        fromMarker.setLatLng([lat, lon]);  // обновляем позицию метки "Откуда"
-        document.getElementById('from').value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
+        // Обновляем значение поля только если это не пользовательское местоположение
+        if (!isUserLocationSet || !isUserLocation) {
+            fromInput.value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
+        }
+
+        if (isUserLocation) {
+            fromInput.value = "Ваше местоположение"; // Устанавливаем текст "Ваше местоположение"
+            isUserLocationSet = true;
+        }
     }
 
-    // Функция для добавления или обновления метки конечного пункта (для "Куда")
     function updateToMarker(lat, lon) {
         if (toMarker) {
-            toMarker.setLatLng([lat, lon]); // если метка уже существует, просто обновляем
+            toMarker.setLatLng([lat, lon]);
         } else {
-            toMarker = L.marker([lat, lon]).addTo(map); // если нет, создаем новую
+            toMarker = L.marker([lat, lon]).addTo(map);
         }
         document.getElementById('to').value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
     }
 
-    // Получаем координаты пользователя с использованием Geolocation API
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                
-                // Обновляем метку, поле "Откуда" и карту
-                updateFromMarker(lat, lon);
-                map.setView([lat, lon], 13); // Перемещаем карту в центр координат пользователя
+                updateFromMarker(lat, lon, true);
+                map.setView([lat, lon], 13);
             },
             (error) => {
                 alert("Ошибка получения координат: " + error.message);
-                // Если не удалось получить координаты, ставим метку по умолчанию (Москва)
-                updateFromMarker(55.751244, 37.618423);
+                updateFromMarker(defaultLocation.lat, defaultLocation.lon);
             }
         );
     } else {
         alert("Геолокация не поддерживается этим браузером.");
-        // Если геолокация не поддерживается, ставим метку по умолчанию (Москва)
-        updateFromMarker(55.751244, 37.618423);
+        updateFromMarker(defaultLocation.lat, defaultLocation.lon);
     }
 
-    // Функция для активации поля
+    function getSuggestions(query) {
+        if (query.length >= 3) { // Проверяем, что длина запроса >= 3 символов
+            const url = `https://catalog.api.2gis.com/3.0/suggests?q=${query}&fields=items.point&sort_point=37.630866,55.752256&key=6a316891-62f1-4a10-a610-8217e3773c91`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // Обработка и отображение подсказок
+                    displaySuggestions(data.result.items);
+                })
+                .catch(error => console.error('Ошибка при запросе к API:', error));
+        }
+    }
+
+    // Функция для отображения подсказок в поле ввода
+    function displaySuggestions(items) {
+        const suggestionList = document.getElementById('suggestions-list');
+        suggestionList.innerHTML = '';
+
+        items.forEach(item => {
+            const suggestionText = item.search_attributes.suggested_text;
+            const suggestionElement = document.createElement('div');
+            suggestionElement.classList.add('suggestion-item');
+            suggestionElement.textContent = suggestionText;
+            suggestionElement.addEventListener('click', () => {
+                if (activeField === 'from') {
+                    document.getElementById('from').value = suggestionText;
+                    // Можно добавить логику для установки маркера на выбранную точку
+                } else {
+                    document.getElementById('to').value = suggestionText;
+                    // Можно добавить логику для установки маркера на выбранную точку
+                }
+                suggestionList.innerHTML = ''; // Скрыть подсказки после выбора
+            });
+            suggestionList.appendChild(suggestionElement);
+        });
+    }
+
+    // Функция для активации поля ввода
     function activateField(field) {
         document.getElementById('from').classList.remove('active-field');
         document.getElementById('to').classList.remove('active-field');
         document.getElementById(field).classList.add('active-field');
     }
 
-    // При фокусе на поле "Откуда" или "Куда" меняем флаг и активируем нужное поле
     const fromInput = document.getElementById('from');
     const toInput = document.getElementById('to');
     const formContainer = document.getElementById('form-container');
@@ -69,55 +110,78 @@ document.addEventListener("DOMContentLoaded", () => {
     fromInput.addEventListener('focus', () => {
         activeField = 'from';
         activateField('from');
-        formContainer.classList.add('active');  // Поднимаем контейнер
-        const center = fromMarker.getLatLng(); // Получаем координаты метки "Откуда"
-        map.setView([center.lat, center.lng], 13); // Перемещаем карту к метке "Откуда"
+        formContainer.classList.add('active');
+        const center = fromMarker.getLatLng();
+        map.setView([center.lat, center.lng], 13);
     });
 
     toInput.addEventListener('focus', () => {
         activeField = 'to';
         activateField('to');
-        formContainer.classList.add('active');  // Поднимаем контейнер
-        const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng(); // Если метка "Куда" есть, используем ее, иначе - метку "Откуда"
-        map.setView([center.lat, center.lng], 13); // Перемещаем карту к метке "Куда" (или "Откуда" если метки нет)
+        formContainer.classList.add('active');
+        const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng();
+        map.setView([center.lat, center.lng], 13);
     });
 
-    // При перемещении карты обновляем метку
     map.on('move', () => {
         const center = map.getCenter();
         if (activeField === 'from') {
-            updateFromMarker(center.lat, center.lng); // Обновляем метку "Откуда"
+            updateFromMarker(center.lat, center.lng, false); // Указываем, что это не пользовательское местоположение
         } else if (activeField === 'to') {
-            updateToMarker(center.lat, center.lng); // Обновляем метку "Куда"
+            updateToMarker(center.lat, center.lng);
         }
     });
 
-    // Обработчики кнопок "Карта"
+// Дебаунсинг для поля "Откуда"
+fromInput.addEventListener('input', () => {
+    activeField = 'from';
+    const query = fromInput.value;
+
+    // Очистка предыдущего таймаута
+    clearTimeout(typingTimeout);
+
+    // Устанавливаем новый таймаут
+    typingTimeout = setTimeout(() => {
+        getSuggestions(query);
+    }, delay);
+});
+
+// Дебаунсинг для поля "Куда"
+toInput.addEventListener('input', () => {
+    activeField = 'to';
+    const query = toInput.value;
+
+    // Очистка предыдущего таймаута
+    clearTimeout(typingTimeout);
+
+    // Устанавливаем новый таймаут
+    typingTimeout = setTimeout(() => {
+        getSuggestions(query);
+    }, delay);
+});
+
     document.getElementById('map-btn-from').addEventListener('click', () => {
-        activeField = 'from'; // Устанавливаем флаг на "Откуда"
-        map.setView(fromMarker.getLatLng(), 13); // Перемещаем карту к метке "Откуда"
-        formContainer.classList.remove('active'); // Скрываем форму
+        activeField = 'from';
+        map.setView(fromMarker.getLatLng(), 13);
+        formContainer.classList.remove('active');
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
-        activeField = 'to'; // Устанавливаем флаг на "Куда"
+        activeField = 'to';
         if (toMarker) {
-            map.setView(toMarker.getLatLng()); // Перемещаем карту к метке "Куда"
+            map.setView(toMarker.getLatLng());
         } else {
             const fromCoords = fromMarker.getLatLng();
-            map.setView([fromCoords.lat+0.001, fromCoords.lng+0.001]); // Если метка "Куда" ещё не создана, перемещаем карту к "Откуда"
+            map.setView([fromCoords.lat + 0.001, fromCoords.lng + 0.001]);
         }
-        formContainer.classList.remove('active'); // Скрываем форму
+        formContainer.classList.remove('active');
     });
 
-    // Обработка отправки формы
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.addEventListener('click', () => {
-        const from = document.getElementById('from').value;
-        const to = document.getElementById('to').value;
+        const from = fromInput.value;
+        const to = toInput.value;
         alert(`Заказ оформлен: \nОткуда: ${from}\nКуда: ${to}`);
         formContainer.classList.remove('active');
     });
 });
-
-
