@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
     const defaultLocation = { lat: 55.751244, lon: 37.618423 }; // Москва, начальная точка
-    const map = L.map('map').setView([defaultLocation.lat, defaultLocation.lon], 13); // Москва
+    const map = L.map('map').setView([defaultLocation.lat, defaultLocation.lon], 16); // Москва
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let typingTimeout;
 
-    const delay = 1500; // Задержка в миллисекундах
+    const delay = 1000; // Задержка в миллисекундах
 
     function updateFromMarker(lat, lon, isUserLocation = false) {
         const fromInput = document.getElementById('from');
-        fromMarker.setLatLng([lat, lon]);
+        fromMarker.setLatLng([lat, lon], 16);
     
         if (!isUserLocationSet || !isUserLocation) {
             fromInput.value = "";  // Очищаем поле или заменяем на пустую строку
@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             isUserLocationSet = true;
         }
     }
+
     // Создаем иконку для нового маркера
     var redIcon = L.icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', // Путь к изображению
@@ -37,36 +38,35 @@ document.addEventListener("DOMContentLoaded", () => {
         shadowSize: [41, 41]
     });
 
-    function updateToMarker(lat, lon) {
+    function updateToMarker(lat, lon, clear_value = true) {
         if (toMarker) {
-            toMarker.setLatLng([lat, lon]);
+            toMarker.setLatLng([lat, lon], 16);
         } else {
             toMarker = L.marker([lat, lon]).addTo(map);
-            toMarker.setIcon(redIcon)
+            toMarker.setIcon(redIcon);
         }
-        document.getElementById('to').value = "";  // Очищаем поле или заменяем на пустую строку
+        if (clear_value)
+            document.getElementById('to').value = "";  // Очищаем поле или заменяем на пустую строку
     }
     
-
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            updateFromMarker(lat, lon, true);  // Обновляем маркер
-            map.setView([lat, lon]);  // Центрируем карту на текущем местоположении
-            document.getElementById('from').value = "Ваше местоположение";  // Устанавливаем текст в поле "Откуда"
-        },
-        (error) => {
-            alert("Ошибка получения координат: " + error.message);
-            updateFromMarker(defaultLocation.lat, defaultLocation.lon);
-        }
-    );
-} else {
-    alert("Геолокация не поддерживается этим браузером.");
-    updateFromMarker(defaultLocation.lat, defaultLocation.lon);
-}
-
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                updateFromMarker(lat, lon, true);  // Обновляем маркер
+                map.setView([lat, lon]);  // Центрируем карту на текущем местоположении
+                document.getElementById('from').value = "Ваше местоположение";  // Устанавливаем текст в поле "Откуда"
+            },
+            (error) => {
+                alert("Ошибка получения координат: " + error.message);
+                updateFromMarker(defaultLocation.lat, defaultLocation.lon);
+            }
+        );
+    } else {
+        alert("Геолокация не поддерживается этим браузером.");
+        updateFromMarker(defaultLocation.lat, defaultLocation.lon);
+    }
 
     function getSuggestions(query) {
         if (query.length >= 3) { // Проверяем, что длина запроса >= 3 символов
@@ -75,8 +75,6 @@ if (navigator.geolocation) {
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    // Обработка и отображение подсказок
                     displaySuggestions(data.result.items);
                 })
                 .catch(error => console.error('Ошибка при запросе к API:', error));
@@ -89,20 +87,33 @@ if (navigator.geolocation) {
         suggestionList.innerHTML = '';
 
         items.forEach(item => {
-            const suggestionText = item.search_attributes.suggested_text;
+            const suggestionText = item.name;
             const suggestionElement = document.createElement('div');
             suggestionElement.classList.add('suggestion-item');
             suggestionElement.textContent = suggestionText;
+
             suggestionElement.addEventListener('click', () => {
+                
                 if (activeField === 'from') {
                     document.getElementById('from').value = suggestionText;
-                    // Можно добавить логику для установки маркера на выбранную точку
-                } else {
+                    // Перемещаем маркер "Откуда" на выбранную точку
+                    const lat = item.point.lat;
+                    const lon = item.point.lon;
+                    fromMarker.setLatLng([lat, lon], 16);
+                    activeField = '';
+                    map.setView([lat, lon], 16);  // Центрируем карту на новой точке
+                } else if (activeField == 'to'){
                     document.getElementById('to').value = suggestionText;
-                    // Можно добавить логику для установки маркера на выбранную точку
+                    // Перемещаем маркер "Куда" на выбранную точку
+                    const lat = item.point.lat;
+                    const lon = item.point.lon;
+                    activeField = '';
+                    updateToMarker(lat, lon, false);
+                    map.setView([lat, lon], 16);  // Центрируем карту на новой точке
                 }
-                suggestionList.innerHTML = ''; // Скрыть подсказки после выбора
+                suggestionList.innerHTML = '';  // Скрыть подсказки после выбора
             });
+
             suggestionList.appendChild(suggestionElement);
         });
     }
@@ -143,33 +154,33 @@ if (navigator.geolocation) {
         }
     });
 
-// Дебаунсинг для поля "Откуда"
-fromInput.addEventListener('input', () => {
-    activeField = 'from';
-    const query = fromInput.value;
+    // Дебаунсинг для поля "Откуда"
+    fromInput.addEventListener('input', () => {
+        activeField = 'from';
+        const query = fromInput.value;
 
-    // Очистка предыдущего таймаута
-    clearTimeout(typingTimeout);
+        // Очистка предыдущего таймаута
+        clearTimeout(typingTimeout);
 
-    // Устанавливаем новый таймаут
-    typingTimeout = setTimeout(() => {
-        getSuggestions(query);
-    }, delay);
-});
+        // Устанавливаем новый таймаут
+        typingTimeout = setTimeout(() => {
+            getSuggestions(query);
+        }, delay);
+    });
 
-// Дебаунсинг для поля "Куда"
-toInput.addEventListener('input', () => {
-    activeField = 'to';
-    const query = toInput.value;
+    // Дебаунсинг для поля "Куда"
+    toInput.addEventListener('input', () => {
+        activeField = 'to';
+        const query = toInput.value;
 
-    // Очистка предыдущего таймаута
-    clearTimeout(typingTimeout);
+        // Очистка предыдущего таймаута
+        clearTimeout(typingTimeout);
 
-    // Устанавливаем новый таймаут
-    typingTimeout = setTimeout(() => {
-        getSuggestions(query);
-    }, delay);
-});
+        // Устанавливаем новый таймаут
+        typingTimeout = setTimeout(() => {
+            getSuggestions(query);
+        }, delay);
+    });
 
     document.getElementById('map-btn-from').addEventListener('click', () => {
         activeField = 'from';
