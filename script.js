@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
+    const ZOOM = 16;
+    const apiKey = '6a3ZOOM891-62f1-4a10-a610-8217e3773c91';
     const defaultLocation = { lat: 55.751244, lon: 37.618423 }; // Москва, начальная точка
-    const map = L.map('map').setView([defaultLocation.lat, defaultLocation.lon], 16); // Москва
+    const map = L.map('map').setView([defaultLocation.lat, defaultLocation.lon], ZOOM); // Москва
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
@@ -11,13 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let toMarker = null;
     let isUserLocationSet = false;
 
+
     let typingTimeout;
 
     const delay = 1000; // Задержка в миллисекундах
 
     function updateFromMarker(lat, lon, isUserLocation = false) {
         const fromInput = document.getElementById('from');
-        fromMarker.setLatLng([lat, lon], 16);
+        fromMarker.setLatLng([lat, lon], ZOOM);
     
         if (!isUserLocationSet || !isUserLocation) {
             fromInput.value = "";  // Очищаем поле или заменяем на пустую строку
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateToMarker(lat, lon, clear_value = true) {
         if (toMarker) {
-            toMarker.setLatLng([lat, lon], 16);
+            toMarker.setLatLng([lat, lon], ZOOM);
         } else {
             toMarker = L.marker([lat, lon]).addTo(map);
             toMarker.setIcon(redIcon);
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getSuggestions(query) {
         if (query.length >= 3) { // Проверяем, что длина запроса >= 3 символов
-            const url = `https://catalog.api.2gis.com/3.0/suggests?q=${query}&fields=items.point&sort_point=37.630866,55.752256&suggest_type=route_endpoint&key=6a316891-62f1-4a10-a610-8217e3773c91`;
+            const url = `https://catalog.api.2gis.com/3.0/suggests?q=${query}&fields=items.point&sort_point=37.630866,55.752256&suggest_type=route_endpoint&key=6a3ZOOM891-62f1-4a10-a610-8217e3773c91`;
             
             fetch(url)
                 .then(response => response.json())
@@ -99,9 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Перемещаем маркер "Откуда" на выбранную точку
                     const lat = item.point.lat;
                     const lon = item.point.lon;
-                    fromMarker.setLatLng([lat, lon], 16);
+                    fromMarker.setLatLng([lat, lon], ZOOM);
                     activeField = '';
-                    map.setView([lat, lon], 16);  // Центрируем карту на новой точке
+                    map.setView([lat, lon], ZOOM);  // Центрируем карту на новой точке
                 } else if (activeField == 'to'){
                     document.getElementById('to').value = suggestionText;
                     // Перемещаем маркер "Куда" на выбранную точку
@@ -109,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const lon = item.point.lon;
                     activeField = '';
                     updateToMarker(lat, lon, false);
-                    map.setView([lat, lon], 16);  // Центрируем карту на новой точке
+                    map.setView([lat, lon], ZOOM);  // Центрируем карту на новой точке
                 }
                 suggestionList.innerHTML = '';  // Скрыть подсказки после выбора
             });
@@ -150,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (activeField === 'from') {
             updateFromMarker(center.lat, center.lng, false); // Указываем, что это не пользовательское местоположение
         } else if (activeField === 'to') {
-            updateToMarker(center.lat, center.lng);
+            updateToMarker(center.lat, center.lng, ZOOM);
         }
     });
 
