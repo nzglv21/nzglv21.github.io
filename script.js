@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         maxZoom: 19,
     }).addTo(map);
 
-    let activeField = 'from';
+    let activeField = '';
     let fromMarker = L.marker([defaultLocation.lat, defaultLocation.lon], { draggable: true }).addTo(map);
     let toMarker = null;
     let isUserLocationSet = false;
@@ -18,48 +18,59 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateFromMarker(lat, lon, isUserLocation = false) {
         const fromInput = document.getElementById('from');
         fromMarker.setLatLng([lat, lon]);
-
-        // Обновляем значение поля только если это не пользовательское местоположение
+    
         if (!isUserLocationSet || !isUserLocation) {
-            fromInput.value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
+            fromInput.value = "";  // Очищаем поле или заменяем на пустую строку
         }
-
+    
         if (isUserLocation) {
-            fromInput.value = "Ваше местоположение"; // Устанавливаем текст "Ваше местоположение"
+            fromInput.value = "Ваше местоположение";
             isUserLocationSet = true;
         }
     }
+    // Создаем иконку для нового маркера
+    var redIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', // Путь к изображению
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
 
     function updateToMarker(lat, lon) {
         if (toMarker) {
             toMarker.setLatLng([lat, lon]);
         } else {
             toMarker = L.marker([lat, lon]).addTo(map);
+            toMarker.setIcon(redIcon)
         }
-        document.getElementById('to').value = `Lat: ${lat.toFixed(5)}, Lon: ${lon.toFixed(5)}`;
+        document.getElementById('to').value = "";  // Очищаем поле или заменяем на пустую строку
     }
+    
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                updateFromMarker(lat, lon, true);
-                map.setView([lat, lon], 13);
-            },
-            (error) => {
-                alert("Ошибка получения координат: " + error.message);
-                updateFromMarker(defaultLocation.lat, defaultLocation.lon);
-            }
-        );
-    } else {
-        alert("Геолокация не поддерживается этим браузером.");
-        updateFromMarker(defaultLocation.lat, defaultLocation.lon);
-    }
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            updateFromMarker(lat, lon, true);  // Обновляем маркер
+            map.setView([lat, lon]);  // Центрируем карту на текущем местоположении
+            document.getElementById('from').value = "Ваше местоположение";  // Устанавливаем текст в поле "Откуда"
+        },
+        (error) => {
+            alert("Ошибка получения координат: " + error.message);
+            updateFromMarker(defaultLocation.lat, defaultLocation.lon);
+        }
+    );
+} else {
+    alert("Геолокация не поддерживается этим браузером.");
+    updateFromMarker(defaultLocation.lat, defaultLocation.lon);
+}
+
 
     function getSuggestions(query) {
         if (query.length >= 3) { // Проверяем, что длина запроса >= 3 символов
-            const url = `https://catalog.api.2gis.com/3.0/suggests?q=${query}&fields=items.point&sort_point=37.630866,55.752256&key=6a316891-62f1-4a10-a610-8217e3773c91`;
+            const url = `https://catalog.api.2gis.com/3.0/suggests?q=${query}&fields=items.point&sort_point=37.630866,55.752256&suggest_type=route_endpoint&key=6a316891-62f1-4a10-a610-8217e3773c91`;
             
             fetch(url)
                 .then(response => response.json())
