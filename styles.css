@@ -33,7 +33,7 @@ body, html {
 }
 
 #form-container.active {
-    height: 50vh; /* Расширяем до 90% высоты экрана */
+    height: 60%; /* Расширяем до 90% высоты экрана */
 }
 
 /* Содержимое формы */
@@ -119,10 +119,4 @@ body, html {
     background-color: #f1f1f1;
 }
 
-/* Адаптация для мобильных устройств */
-@media screen and (max-width: 768px) {
-    #form button {
-        font-size: 18px;
-        padding: 14px;
-    }
-}
+
