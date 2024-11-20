@@ -16,6 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const delay = 1000; // Задержка в миллисекундах
 
+    const toggleFormBtn = document.getElementById('toggle-form-btn');
+
+    toggleFormBtn.addEventListener('click', () => {
+        // Переключение состояния формы
+        formContainer.classList.toggle('active');
+        activeField = ''
+    });
+
     function updateFromMarker(lat, lon, isUserLocation = false) {
         const fromInput = document.getElementById('from');
         fromMarker.setLatLng([lat, lon], ZOOM);
