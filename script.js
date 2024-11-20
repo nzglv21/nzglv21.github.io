@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     updateToMarker(lat, lon, false);
                     map.setView([lat, lon], ZOOM);  // Центрируем карту на новой точке
                 }
+                formContainer.classList.toggle('active');
                 suggestionList.innerHTML = '';  // Скрыть подсказки после выбора
             });
 
