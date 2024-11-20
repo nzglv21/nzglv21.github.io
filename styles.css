@@ -23,7 +23,7 @@ body, html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 25%;
+    height: 27%;
     background-color: white;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -33,7 +33,7 @@ body, html {
 }
 
 #form-container.active {
-    height: 100%; /* Расширяем до 60% высоты экрана */
+    height: 90%; /* Расширяем до 60% высоты экрана */
 }
 
 /* Содержимое формы */
@@ -118,15 +118,14 @@ body, html {
 .suggestion-item:hover {
     background-color: #f1f1f1;
 }
-
 /* Стили для кнопки подъема формы */
 #toggle-form-btn {
     position: absolute;
-    /* top: -3px; */
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
-    height: 8px;
+    width: 30px;
+    height: 10px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -136,7 +135,7 @@ body, html {
 #toggle-form-btn::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -10px;
     left: 50%;
     transform: translateX(-50%) rotate(45deg); /* Вращаем, чтобы получилась стрелка */
     width: 12px;
@@ -149,6 +148,3 @@ body, html {
 #form-container.active #toggle-form-btn::before {
     transform: translateX(-50%) rotate(-135deg); /* Поворот на -135deg, чтобы получилась стрелка вниз */
 }
-
-
-
