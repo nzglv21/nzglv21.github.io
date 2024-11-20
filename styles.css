@@ -1,5 +1,3 @@
-
-
 /* Базовые стили */
 body, html {
     margin: 0;
@@ -97,7 +95,7 @@ body, html {
 }
 
 /* Стили для подсказок */
-#suggestions-list {
+.suggestions-list {
     position: absolute;
     top: 100%;
     left: 0;
@@ -121,12 +119,6 @@ body, html {
     background-color: #f1f1f1;
 }
 
-/* Показываем список подсказок при вводе
-#form input:focus + #suggestions-list,
-#form input.active-field + #suggestions-list {
-    display: block; /* Показываем список подсказок при фокусе */
-/* } */ 
-
 /* Адаптация для мобильных устройств */
 @media screen and (max-width: 768px) {
     #form button {
@@ -134,4 +126,3 @@ body, html {
         padding: 14px;
     }
 }
-
