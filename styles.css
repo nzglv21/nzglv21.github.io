@@ -19,6 +19,7 @@ body, html {
 
 /* Контейнер формы */
 #form-container {
+    padding-top: 15px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -38,9 +39,6 @@ body, html {
     height: 90%; /* Увеличиваем форму, но она всё равно ограничена max-height */
     max-height: 100vh; /* Учитываем высоту видимой области без переполнения */
 }
-
-
-
 
 /* Содержимое формы */
 #form {
@@ -125,34 +123,31 @@ body, html {
     background-color: #f1f1f1;
 }
 
+/* Кнопка для переключения состояния формы (стрелка) */
 #toggle-form-btn {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 30px;
-    height: 15px;
-    background-color: #fff;
+    width: 60px;
+    height: 40px;
+    background-color: transparent;
     border: none;
     cursor: pointer;
     z-index: 30;
     display: flex;
     justify-content: center;
     align-items: center;
+    top: -0.5px; /* Располагаем стрелку внутри формы, в верхней части */
 }
 
-/* Стрелка с помощью псевдоэлемента */
-#toggle-form-btn::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    border-left: 2px solid #28a745;
-    border-top: 2px solid #28a745;
-    transform: rotate(45deg); /* Вращаем для стрелки */
+/* Стрелка SVG */
+#toggle-arrow {
+    transition: transform 0.3s ease;
+    width: 60px;
+    height: 40px;
 }
 
-
-/* Стили для кнопки при активном состоянии (стрелка вниз) */
-#form-container.active #toggle-form-btn::before {
-    transform: translateX(-50%) rotate(-135deg); /* Поворот на -135deg, чтобы получилась стрелка вниз */
-
+/* Стрелка, когда форма активна (стрелка вниз) */
+#form-container.active #toggle-arrow {
+    transform: rotate(180deg); /* Поворот стрелки на 180 градусов */
 }
