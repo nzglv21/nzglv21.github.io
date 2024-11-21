@@ -149,34 +149,34 @@ body, html {
     background-color: #f1f1f1;
 }
 
-/* Стили для кнопки подъёма формы */
 #toggle-form-btn {
     position: absolute;
-    top: -15px; /* Располагаем чуть выше края формы */
     left: 50%;
     transform: translateX(-50%);
     width: 30px;
     height: 15px;
-    background: transparent;
+    background-color: #fff;
     border: none;
     cursor: pointer;
     z-index: 30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Декоративная стрелка */
+/* Стрелка с помощью псевдоэлемента */
 #toggle-form-btn::before {
     content: '';
-    position: absolute;
-    top: 50%; /* Центрируем стрелку по высоте кнопки */
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg); /* Вращаем, чтобы получилась стрелка */
-    width: 12px;
-    height: 12px;
-    border-top: 3px solid #28a745; /* Зелёная линия */
-    border-left: 3px solid #28a745; /* Зелёная линия */
+    width: 10px;
+    height: 10px;
+    border-left: 2px solid #28a745;
+    border-top: 2px solid #28a745;
+    transform: rotate(45deg); /* Вращаем для стрелки */
 }
+
 
 /* Стили для кнопки при активном состоянии (стрелка вниз) */
 #form-container.active #toggle-form-btn::before {
     transform: translateX(-50%) rotate(-135deg); /* Поворот на -135deg, чтобы получилась стрелка вниз */
+    
 }
