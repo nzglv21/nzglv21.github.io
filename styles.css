@@ -50,6 +50,19 @@ body, html {
         height: 75%; /* Расширенное состояние */
         max-height: 100vh; /* Предотвращаем выход за видимую область */
     }
+
+    #toggle-form-btn {
+        top: -10px; /* Немного сдвигаем кнопку для мобильных устройств */
+        width: 25px;
+        height: 10px;
+    }
+
+    #toggle-form-btn::before {
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid #28a745;
+        border-left: 2px solid #28a745;
+    }
 }
 
 
@@ -135,30 +148,32 @@ body, html {
 .suggestion-item:hover {
     background-color: #f1f1f1;
 }
-/* Стили для кнопки подъема формы */
+
+/* Стили для кнопки подъёма формы */
 #toggle-form-btn {
     position: absolute;
-    top: -10px;
+    top: -15px; /* Располагаем чуть выше края формы */
     left: 50%;
     transform: translateX(-50%);
     width: 30px;
-    height: 10px;
+    height: 15px;
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 30;
 }
 
+/* Декоративная стрелка */
 #toggle-form-btn::before {
     content: '';
     position: absolute;
-    top: -10px;
+    top: 50%; /* Центрируем стрелку по высоте кнопки */
     left: 50%;
-    transform: translateX(-50%) rotate(45deg); /* Вращаем, чтобы получилась стрелка */
+    transform: translate(-50%, -50%) rotate(45deg); /* Вращаем, чтобы получилась стрелка */
     width: 12px;
     height: 12px;
-    border-top: 3px solid #28a745; /* Зеленая линия */
-    border-left: 3px solid #28a745; /* Зеленая линия */
+    border-top: 3px solid #28a745; /* Зелёная линия */
+    border-left: 3px solid #28a745; /* Зелёная линия */
 }
 
 /* Стили для кнопки при активном состоянии (стрелка вниз) */
