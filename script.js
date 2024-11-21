@@ -188,13 +188,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById('map-btn-from').addEventListener('click', () => {
-        activeField = '';
+        // activeField = '';
         map.setView(fromMarker.getLatLng(), ZOOM);
         formContainer.classList.toggle('active');
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
-        activeField = '';
+        // activeField = '';
         if (toMarker) {
             map.setView(toMarker.getLatLng(), ZOOM);
         } else {
