@@ -151,3 +151,15 @@ body, html {
 #form-container.active #toggle-arrow {
     transform: rotate(180deg); /* Поворот стрелки на 180 градусов */
 }
+
+/* Поддержка адаптивности */
+@media (max-width: 768px) {
+    #form-container {
+        height: 35%; /* Уменьшенная высота для мобильных устройств */
+        max-height: calc(var(--vh, 1vh) * 35);
+    }
+    #form-container.active {
+        height: 75%;
+        max-height: calc(var(--vh, 1vh) * 75);
+    }
+}
