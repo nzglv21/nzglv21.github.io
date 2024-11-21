@@ -39,31 +39,7 @@ body, html {
     max-height: 100vh; /* Учитываем высоту видимой области без переполнения */
 }
 
-/* Для мобильных устройств */
-@media (max-width: 768px) {
-    #form-container {
-        height: 35%; /* Более компактное начальное состояние для мобильных */
-        max-height: 100vh; /* Убедимся, что форма остаётся в пределах экрана */
-    }
 
-    #form-container.active {
-        height: 75%; /* Расширенное состояние */
-        max-height: 100vh; /* Предотвращаем выход за видимую область */
-    }
-
-    #toggle-form-btn {
-        top: -10px; /* Немного сдвигаем кнопку для мобильных устройств */
-        width: 25px;
-        height: 10px;
-    }
-
-    #toggle-form-btn::before {
-        width: 10px;
-        height: 10px;
-        border-top: 2px solid #28a745;
-        border-left: 2px solid #28a745;
-    }
-}
 
 
 /* Содержимое формы */
@@ -178,5 +154,5 @@ body, html {
 /* Стили для кнопки при активном состоянии (стрелка вниз) */
 #form-container.active #toggle-form-btn::before {
     transform: translateX(-50%) rotate(-135deg); /* Поворот на -135deg, чтобы получилась стрелка вниз */
-    
+
 }
