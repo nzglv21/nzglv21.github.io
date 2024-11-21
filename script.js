@@ -188,20 +188,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById('map-btn-from').addEventListener('click', () => {
-        activeField = 'from';
+        activeField = '';
         map.setView(fromMarker.getLatLng(), ZOOM);
-        formContainer.classList.remove('active');
+        formContainer.classList.toggle('active');
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
-        activeField = 'to';
+        activeField = '';
         if (toMarker) {
             map.setView(toMarker.getLatLng(), ZOOM);
         } else {
             const fromCoords = fromMarker.getLatLng();
             map.setView([fromCoords.lat + 0.001, fromCoords.lng + 0.001], ZOOM);
         }
-        formContainer.classList.remove('active');
+        formContainer.classList.toggle('active');
     });
 
     const submitBtn = document.getElementById('submit-btn');
