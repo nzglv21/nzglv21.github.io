@@ -266,7 +266,6 @@ document.addEventListener("DOMContentLoaded", () => {
         tg.sendData(JSON.stringify(data)); // Отправляем данные в бота
 
 
-        alert(`Данные готовы к отправке: \n${JSON.stringify(data, null, 2)}`);
-        formContainer.classList.remove('active');
+        // formContainer.classList.remove('active');
     });
 });
