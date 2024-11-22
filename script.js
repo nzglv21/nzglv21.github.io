@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formContainer = document.getElementById('form-container');
 
     fromInput.addEventListener('focus', () => {
-        activeField = 'from';
+        activeField = '';
         activateField('from');
         formContainer.classList.add('active');
         const center = fromMarker.getLatLng();
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     toInput.addEventListener('focus', () => {
-        activeField = 'to';
+        activeField = '';
         activateField('to');
         formContainer.classList.add('active');
         const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng();
@@ -188,13 +188,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById('map-btn-from').addEventListener('click', () => {
-        // activeField = '';
+        activeField = 'from';
         map.setView(fromMarker.getLatLng(), ZOOM);
         formContainer.classList.toggle('active');
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
-        // activeField = '';
+        activeField = 'to';
         if (toMarker) {
             map.setView(toMarker.getLatLng(), ZOOM);
         } else {
