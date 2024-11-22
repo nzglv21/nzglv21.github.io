@@ -263,9 +263,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
-        tg.sendData(JSON.stringify(data)); // Отправляем данные в бота
+        tg.sendData(JSON.stringify("adas")); // Отправляем данные в бота
 
-
+        alert("hi")
         // formContainer.classList.remove('active');
     });
 });
