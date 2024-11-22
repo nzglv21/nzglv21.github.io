@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
+    tg.expand(); // Разворачиваем WebApp на весь экран
+
     const ZOOM = 16;
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
     const defaultLocation = { lat: 55.751244, lon: 37.618423 }; // Москва, начальная точка
@@ -244,7 +248,25 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.addEventListener('click', () => {
         const from = fromInput.value;
         const to = toInput.value;
-        alert(`Заказ оформлен: \nОткуда: ${from}\nКуда: ${to}`);
+        const fromCoords = fromMarker.getLatLng();
+        const toCoords = toMarker ? toMarker.getLatLng() : null;
+
+        const data = {
+            from: {
+                address: from,
+                coords: { lat: fromCoords.lat, lon: fromCoords.lng }
+            },
+            to: {
+                address: to,
+                coords: toCoords ? { lat: toCoords.lat, lon: toCoords.lng } : null
+            }
+        };
+
+
+        tg.sendData(JSON.stringify(data)); // Отправляем данные в бота
+
+
+        alert(`Данные готовы к отправке: \n${JSON.stringify(data, null, 2)}`);
         formContainer.classList.remove('active');
     });
 });
