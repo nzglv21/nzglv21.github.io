@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let fromMarker = L.marker([defaultLocation.lat, defaultLocation.lon], { draggable: true }).addTo(map);
     let toMarker = null;
     let isUserLocationSet = false;
+    let typingTimeout, geocodeTimeout;
 
-    let typingTimeout;
 
     const delay = 1000; // Задержка в миллисекундах
 
@@ -26,15 +26,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateFromMarker(lat, lon, isUserLocation = false) {
         const fromInput = document.getElementById('from');
-        fromMarker.setLatLng([lat, lon], ZOOM);
+        fromMarker.setLatLng([lat, lon]);
 
-        if (!isUserLocationSet || !isUserLocation) {
-            fromInput.value = "";  // Очищаем поле или заменяем на пустую строку
-        }
-
-        if (isUserLocation) {
+        if (!isUserLocation) {
+            updateInputWithGeocode('from', lat, lon);
+        } else {
             fromInput.value = "Ваше местоположение";
             isUserLocationSet = true;
+        }
+    }
+
+
+
+    function updateToMarker(lat, lon, clearValue = true) {
+        if (toMarker) {
+            toMarker.setLatLng([lat, lon]);
+        } else {
+            toMarker = L.marker([lat, lon], { draggable: true }).addTo(map);
+            toMarker.setIcon(redIcon);
+
+            // Добавляем обработчик перемещения для "Куда"
+            toMarker.on('moveend', (e) => {
+                const position = e.target.getLatLng();
+                updateInputWithGeocode('to', position.lat, position.lng);
+            });
+        }
+
+        if (clearValue) {
+            document.getElementById('to').value = "";
+        } else {
+            updateInputWithGeocode('to', lat, lon);
         }
     }
 
@@ -42,17 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
     var redIcon = L.icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', // Путь к изображению
     });
-
-    function updateToMarker(lat, lon, clear_value = true) {
-        if (toMarker) {
-            toMarker.setLatLng([lat, lon], ZOOM);
-        } else {
-            toMarker = L.marker([lat, lon]).addTo(map);
-            toMarker.setIcon(redIcon);
-        }
-        if (clear_value)
-            document.getElementById('to').value = "";  // Очищаем поле или заменяем на пустую строку
-    }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -155,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (activeField === 'from') {
             updateFromMarker(center.lat, center.lng, false); // Указываем, что это не пользовательское местоположение
         } else if (activeField === 'to') {
-            updateToMarker(center.lat, center.lng, ZOOM);
+            updateToMarker(center.lat, center.lng, false);
         }
     });
 
@@ -203,6 +213,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         formContainer.classList.toggle('active');
     });
+
+
+    function reverseGeocode(lat, lon, callback) {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&zoom=18&lat=${lat}&lon=${lon}&accept-language=ru`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                const address = data.display_name || "Неизвестный адрес";
+                callback(address);
+            })
+            .catch(error => {
+                console.error("Ошибка при геокодировании:", error);
+                callback("Не удалось определить адрес");
+            });
+    }
+
+    function updateInputWithGeocode(field, lat, lon) {
+        clearTimeout(geocodeTimeout);
+        geocodeTimeout = setTimeout(() => {
+            reverseGeocode(lat, lon, (address) => {
+                document.getElementById(field).value = address;
+            });
+        }, delay);
+    }
 
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.addEventListener('click', () => {
