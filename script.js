@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
     tg.expand(); // Разворачиваем WebApp на весь экран
+    tg.requestFullscreen();
 
     const ZOOM = 16;
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
