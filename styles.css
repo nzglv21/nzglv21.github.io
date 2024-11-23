@@ -67,6 +67,9 @@ body, html {
     color: var(--tg-theme-text-color, #000000); /* Основной цвет текста */
 }
 
+
+
+
 #form button {
     padding: 12px;
     font-size: 16px;
@@ -77,6 +80,11 @@ body, html {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
     cursor: pointer;
 }
+
+
+
+
+
 
 /* Кнопки карты */
 #form .map-btn {
@@ -95,14 +103,22 @@ body, html {
     z-index: 10;
 }
 
+
+
+
 #form-container.active .map-btn {
     display: block; /* Показываем кнопки карты только при активном состоянии формы */
 }
+
+
 
 /* Активное поле ввода */
 #form input.active-field {
     border-color: var(--tg-theme-accent-text-color, #0088cc); /* Цвет акцентного текста */
 }
+
+
+
 
 /* Стили для подсказок */
 .suggestions-list {
@@ -120,6 +136,9 @@ body, html {
     border-radius: 8px; /* Круглые углы */
 }
 
+
+
+
 .suggestion-item {
     padding: 12px;
     cursor: pointer;
@@ -127,9 +146,13 @@ body, html {
     color: var(--tg-theme-hint-color, #888888); /* Цвет текста подсказки */
 }
 
+
+
 .suggestion-item:hover {
     background-color: var(--tg-theme-secondary-bg-color, #f1f1f1); /* Дополнительный цвет фона */
 }
+
+
 
 /* Кнопка для переключения состояния формы (стрелка) */
 #toggle-form-btn {
@@ -153,6 +176,7 @@ body, html {
     transition: transform 0.3s ease;
     width: 60px;
     height: 40px;
+    stroke: var(--tg-theme-button-color, #0088cc); /* Зеленый цвет для стрелки */
 }
 
 /* Стрелка, когда форма активна (стрелка вниз) */
