@@ -3,10 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
     tg.expand(); // Разворачиваем WebApp на весь экран
     tg.requestFullscreen();
-
     const ZOOM = 16;
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
-    const defaultLocation = { lat: 55.751244, lon: 54 }; // Москва, начальная точка
+    const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
     const map = L.map('map').setView([defaultLocation.lat, defaultLocation.lon], ZOOM); // Москва
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
