@@ -154,6 +154,7 @@ body, html {
     width: 60px;
     height: 40px;
     stroke: var(--tg-theme-button-color, #0088cc); /* Зеленый цвет для стрелки */
+    transform: rotate(180deg); /* Поворот стрелки на 180 градусов */
 }
 
 /* Стрелка, когда форма активна (стрелка вниз) */
