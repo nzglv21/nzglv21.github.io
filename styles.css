@@ -84,6 +84,7 @@ body, html {
     background-color: transparent;
     outline: none;
     color: var(--tg-theme-text-color, #000000);
+    /* display:block; */
 }
 
 /* Вертикальная разделительная линия */
@@ -129,6 +130,22 @@ body, html {
 
 .suggestion-item:hover {
     background-color: var(--tg-theme-secondary-bg-color, #f1f1f1);
+}
+
+#form .map-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: var(--tg-theme-button-color, #0088cc); /* Цвет кнопки */
+    color: var(--tg-theme-button-text-color, #ffffff); /* Цвет текста кнопки */
+    border: none;
+    border-radius: 8px; /* Более круглые углы */
+    cursor: pointer;
+    display: none; /* Скрыто по умолчанию */
+    z-index: 10;
 }
 
 /* Кнопка для переключения состояния формы */

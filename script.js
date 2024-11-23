@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleFormBtn.addEventListener('click', () => {
         // Переключение состояния формы
         formContainer.classList.toggle('active');
+        
         activeField = ''
     });
 
@@ -205,7 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('map-btn-from').addEventListener('click', () => {
         activeField = 'from';
         map.setView(fromMarker.getLatLng(), ZOOM);
-        formContainer.classList.toggle('active');
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
@@ -216,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const fromCoords = fromMarker.getLatLng();
             map.setView([fromCoords.lat + 0.001, fromCoords.lng + 0.001], ZOOM);
         }
-        formContainer.classList.toggle('active');
     });
 
 
