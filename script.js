@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ZOOM = 16;
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
-    const defaultLocation = { lat: 55.751244, lon: 37.618423 }; // Москва, начальная точка
+    const defaultLocation = { lat: 55.751244, lon: 54 }; // Москва, начальная точка
     const map = L.map('map').setView([defaultLocation.lat, defaultLocation.lon], ZOOM); // Москва
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -88,8 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getSuggestions(query) {
+        const fromCoords = fromMarker.getLatLng();
         if (query.length >= 3) { // Проверяем, что длина запроса >= 3 символов
-            const url = `https://catalog.api.2gis.com/3.0/suggests?q=${query}&fields=items.point&sort_point=37.630866,55.752256&suggest_type=route_endpoint&key=${apiKey}`;
+            const url = `https://catalog.api.2gis.com/3.0/suggests?q=Уфа, ${query}&fields=items.point&sort_point=${fromCoords.lat},${fromCoords.lng}&suggest_type=route_endpoint&key=${apiKey}`;
 
             fetch(url)
                 .then(response => response.json())
@@ -222,11 +223,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function reverseGeocode(lat, lon, callback) {
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&zoom=18&lat=${lat}&lon=${lon}&accept-language=ru`;
 
+
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                const address = data.display_name || "Неизвестный адрес";
+                console.log(data.display_name.split(', ').slice(0, 3).join(', '));
+                data.address
+                const address = data.display_name.split(', ').slice(0, 3).join(', ')|| "Неизвестный адрес";
                 callback(address);
             })
             .catch(error => {
@@ -263,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
-        tg.sendData(JSON.stringify("adas")); // Отправляем данные в бота
+        tg.sendData(JSON.stringify(data)); // Отправляем данные в бота
 
         alert("hi")
         // formContainer.classList.remove('active');
