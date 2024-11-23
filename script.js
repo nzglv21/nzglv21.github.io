@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
+    tg.expand();
     tg.requestFullscreen();
     tg.disableVerticalSwipes();
     const ZOOM = 16;
