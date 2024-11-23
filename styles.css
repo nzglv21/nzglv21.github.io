@@ -83,8 +83,10 @@ body, html {
 #form input#to {
     flex: 1; /* Основное поле ввода занимает оставшееся пространство */
     padding: 12px;
-    /* border-radius: 8px; Полное скругление */
+    border-radius: 8px; 
     border-right: none; /* Убираем правую границу */
+    min-width: 0; /* Убираем минимальную ширину, чтобы поле ужималось */
+
 }
 
 .entrance-input {
