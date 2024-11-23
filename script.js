@@ -2,9 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
     tg.requestFullscreen();
     tg.disableVerticalSwipes();
-    Telegram.WebApp.LocationManager.getLocation(
-
-    );
     const ZOOM = 16;
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
     const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
