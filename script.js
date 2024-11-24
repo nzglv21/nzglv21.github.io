@@ -176,12 +176,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     toInput.addEventListener('focus', () => {
-        window.scrollTo(0, 0);
         activeField = '';
         activateField('to');
         formContainer.classList.add('active');
         const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng();
         map.setView([center.lat, center.lng], ZOOM);
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Плавная прокрутка
+        });
+        window.scrollTo({
+            top: 1,
+            behavior: 'smooth' // Плавная прокрутка
+        });
     });
 
     map.on('move', () => {
