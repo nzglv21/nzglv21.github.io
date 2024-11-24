@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
-    // tg.expand();
-    // tg.requestFullscreen();
-    // tg.disableVerticalSwipes();
+    tg.expand();
+    tg.requestFullscreen();
+    tg.disableVerticalSwipes();
     document.body.scrollTop = 0
     const ZOOM = 18;
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
@@ -159,43 +159,69 @@ document.addEventListener("DOMContentLoaded", () => {
     const toInput = document.getElementById('to');
     const formContainer = document.getElementById('form-container');
 
-    fromInput.addEventListener('focus', () => {
-        // Прокручиваем поле ввода в видимую область
+ // Проверка, открыта ли клавиатура на мобильных устройствах
+function handleResize() {
+    const formContainer = document.getElementById('form-container');
+    const isKeyboardOpen = window.innerHeight < 500; // Если высота окна меньше 500px, считаем, что клавиатура открыта
+    if (isKeyboardOpen) {
+        formContainer.classList.add('keyboard-open');
+    } else {
+        formContainer.classList.remove('keyboard-open');
+    }
+}
+
+// Добавление обработчика события на изменение размера окна
+window.addEventListener('resize', handleResize);
+handleResize(); // Вызываем сразу для проверки
+
+// Функция для обработки фокуса на поле "Откуда"
+fromInput.addEventListener('focus', () => {
+    // Прокручиваем поле ввода в видимую область только если клавиатура открыта
+    if (window.innerHeight < 500) {
         fromInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-        // Устанавливаем активное поле
-        activeField = '';
-        activateField('from');
-    
-        // Активируем форму
-        formContainer.classList.add('active');
-    
-        // Центрируем карту на маркере
-        const center = fromMarker.getLatLng();
-        map.setView([center.lat, center.lng], ZOOM);
+    }
 
-        fromInput.scrollIntoView({
-            behavior: 'smooth', // Плавная прокрутка
-            block: 'center' // Центрирование элемента в видимой области
-        });
-    });
+    // Устанавливаем активное поле
+    activeField = '';
+    activateField('from');
+    
+    // Активируем форму
+    formContainer.classList.add('active');
+    
+    // Центрируем карту на маркере
+    const center = fromMarker.getLatLng();
+    map.setView([center.lat, center.lng], ZOOM);
+});
 
-    toInput.addEventListener('focus', () => {
-        activeField = '';
-        activateField('to');
-        formContainer.classList.add('active');
-        const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng();
-        map.setView([center.lat, center.lng], ZOOM);
+// Функция для обработки фокуса на поле "Куда"
+toInput.addEventListener('focus', () => {
+    activeField = '';
+    activateField('to');
+    formContainer.classList.add('active');
 
+    const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng();
+    map.setView([center.lat, center.lng], ZOOM);
+
+    // Прокручиваем страницу наверх, но только если клавиатура открыта
+    if (window.innerHeight < 500) {
         window.scrollTo({
             top: 0,
             behavior: 'smooth' // Плавная прокрутка
         });
+
+        // Прокручиваем немного вниз, чтобы избежать перекрытия клавиатуры
         window.scrollTo({
             top: 1,
             behavior: 'smooth' // Плавная прокрутка
         });
-    });
+    }
+
+    // Прокручиваем поле "Куда" в видимую область, если клавиатура открыта
+    if (window.innerHeight < 500) {
+        toInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
 
     map.on('move', () => {
         const center = map.getCenter();

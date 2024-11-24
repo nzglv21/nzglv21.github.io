@@ -23,8 +23,6 @@ body, html {
 
 /* Контейнер формы */
 #form-container {
-    padding-top: 1 !important;
-    padding-top: 15px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -44,6 +42,12 @@ body, html {
     height: 70vh; /* Увеличиваем форму, но она всё равно ограничена max-height */
     max-height: 70vh; /* Учитываем высоту видимой области без переполнения */
 }
+
+#form-container.keyboard-open {
+    height: 40vh; /* Уменьшаем высоту формы, когда клавиатура открыта */
+    max-height: 40vh;
+}
+
 
 /* Содержимое формы */
 #form {
