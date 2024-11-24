@@ -160,11 +160,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const formContainer = document.getElementById('form-container');
 
     fromInput.addEventListener('focus', () => {
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
+        // Прокручиваем поле ввода в видимую область
+        fromInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+        // Устанавливаем активное поле
         activeField = '';
         activateField('from');
+    
+        // Активируем форму
         formContainer.classList.add('active');
+    
+        // Центрируем карту на маркере
         const center = fromMarker.getLatLng();
         map.setView([center.lat, center.lng], ZOOM);
     });
