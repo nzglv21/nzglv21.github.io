@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tg.disableVerticalSwipes();
     document.body.scrollTop = 0
     const ZOOM = 18;
-    const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
+    const apiKey = '';
     const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
     const map = L.map('map',
         {
@@ -148,6 +148,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    document.getElementById('from').addEventListener('input', function() {
+        const trainInput = document.getElementById('train');
+        if (this.value) {
+            trainInput.style.display = 'block'; // Показываем поле для ввода поезда
+        } else {
+            trainInput.style.display = 'none'; // Скрываем, если поле "Откуда" пустое
+        }
+    });
+    
     // Функция для активации поля ввода
     function activateField(field) {
         document.getElementById('from').classList.remove('active-field');
@@ -309,13 +318,15 @@ toInput.addEventListener('focus', () => {
     submitBtn.addEventListener('click', () => {
         const from = fromInput.value;
         const to = toInput.value;
+        const entrance = document.getElementById('entrance').value;
         const fromCoords = fromMarker.getLatLng();
         const toCoords = toMarker ? toMarker.getLatLng() : null;
 
         const data = {
             from: {
                 address: from,
-                coords: { lat: fromCoords.lat, lon: fromCoords.lng }
+                coords: { lat: fromCoords.lat, lon: fromCoords.lng },
+                entrance: entrance
             },
             to: {
                 address: to,

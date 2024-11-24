@@ -27,6 +27,8 @@ body {
     z-index: 1;
 }
 
+
+
 /* Контейнер формы */
 #form-container {
     position: fixed;
@@ -65,6 +67,14 @@ body {
     flex-direction: column;
     gap: 15px;
     position: relative;
+}
+
+#train {
+    margin-top: 10px; /* Отступ для красивого отображения */
+    width: 100%; /* Сделаем поле поезда такой же ширины, как и другие поля */
+    padding: 10px; /* Добавить внутренние отступы для удобства использования */
+    border: 1px solid #ccc; /* Оформление границы */
+    border-radius: 4px; /* Закругленные углы */
 }
 
 .input-container {
@@ -218,6 +228,7 @@ body {
     display: block; /* Скрываем по умолчанию */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
 }
+
 
 .input-container input:focus + .clear-btn {
     display: block; /* Показываем кнопку только при фокусе на поле ввода */
