@@ -82,8 +82,11 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 1px; /* Отступ между строками */
+    margin-bottom: 15px;
 }
-
+.input-container input {
+    margin-right: 10px; /* Отступ между двумя полями ввода */
+}
 #form input {
     font-size: 16px;
     border: 1px solid #ccc;
@@ -115,7 +118,14 @@ body {
 
 }
 
-
+.entrance-input {
+    flex: 1; /* Позволяет полю занимать оставшееся пространство */
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc; /* Оформление границы */
+    background-color: var(--tg-theme-bg-color, #ffffff); /* Цвет фона */
+    color: var(--tg-theme-text-color, #000000); /* Цвет текста */
+} 
 /* Кнопки карты */
 .map-btn {
     margin-left: 10px; /* Отступ от поля ввода */
