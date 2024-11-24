@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fromInput.addEventListener('focus', () => {
         window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
         activeField = '';
         activateField('from');
         formContainer.classList.add('active');
