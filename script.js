@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
-    tg.expand();
-    tg.requestFullscreen();
-    tg.disableVerticalSwipes();
+    // tg.expand();
+    // tg.requestFullscreen();
+    // tg.disableVerticalSwipes();
     document.body.scrollTop = 0
     const ZOOM = 18;
     const apiKey = '';
@@ -149,13 +149,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.getElementById('from').addEventListener('input', function() {
-        const trainInput = document.getElementById('train');
-        if (this.value) {
-            trainInput.style.display = 'block'; // Показываем поле для ввода поезда
+        const fromInput = this.value.trim();
+    
+        // Если длина текста больше 0, показываем поля подъезда
+        if (fromInput.length > 0) {
+            document.getElementById('entrance').style.display = 'block';
         } else {
-            trainInput.style.display = 'none'; // Скрываем, если поле "Откуда" пустое
+            document.getElementById('entrance').style.display = 'none';
         }
     });
+    
+    // Изменим функцию updateFromMarker, чтобы добавлять данные подъезда
+    function updateFromMarker(lat, lon, isUserLocation = false) {
+        const fromInput = document.getElementById('from');
+        fromMarker.setLatLng([lat, lon]);
+    
+        if (!isUserLocation) {
+            updateInputWithGeocode('from', lat, lon);
+        } else {
+            fromInput.value = "Ваше местоположение";
+            isUserLocationSet = true;
+        }
+    
+        // Проверяем, если подполе для подъезда видимо
+        if (document.getElementById('entrance').style.display === 'block') {
+            const entranceInput = document.getElementById('entrance').value;
+            // Здесь Вы можете как-то использовать значение подъезда, например, сохранять или выводить его
+            console.log("Подъезд: ", entranceInput);
+        }
+    }
+    
     
     // Функция для активации поля ввода
     function activateField(field) {
