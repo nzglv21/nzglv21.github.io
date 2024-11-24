@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
-    tg.expand();
-    tg.requestFullscreen();
-    tg.disableVerticalSwipes();
+    // tg.expand();
+    // tg.requestFullscreen();
+    // tg.disableVerticalSwipes();
     document.body.scrollTop = 0
     const ZOOM = 18;
     const apiKey = '6a316891-62f1-4a10-a610-8217e3773c91';
@@ -173,6 +173,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Центрируем карту на маркере
         const center = fromMarker.getLatLng();
         map.setView([center.lat, center.lng], ZOOM);
+
+        fromInput.scrollIntoView({
+            behavior: 'smooth', // Плавная прокрутка
+            block: 'center' // Центрирование элемента в видимой области
+        });
     });
 
     toInput.addEventListener('focus', () => {

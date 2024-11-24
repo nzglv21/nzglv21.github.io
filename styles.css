@@ -41,7 +41,6 @@ body, html {
 }
 
 #form-container.active {
-    padding-top: 1 !important;
     height: 70vh; /* Увеличиваем форму, но она всё равно ограничена max-height */
     max-height: 70vh; /* Учитываем высоту видимой области без переполнения */
 }
