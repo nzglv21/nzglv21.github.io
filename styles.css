@@ -54,6 +54,7 @@ body, html {
 }
 
 .input-container {
+    padding-bottom: 1 !important;
     position: relative;
     display: flex;
     align-items: center;
