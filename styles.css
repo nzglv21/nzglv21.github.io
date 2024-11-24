@@ -92,16 +92,29 @@ body, html {
 
 /* Кнопки карты */
 .map-btn {
-    margin-left: 10px; /* Отступ кнопки от поля ввода */
-    padding: 12px 16px;
-    font-size: 14px;
-    background-color: var(--tg-theme-button-color, #0088cc);
-    color: var(--tg-theme-button-text-color, #ffffff);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 10px; /* Отступ от поля ввода */
+    padding: 8px; /* Внутренний отступ */
+    /* background-color: var(--tg-theme-button-color, #0088cc); Цвет фона кнопки */
+    border: none; /* Убираем границы */
+    border-radius: 8px; /* Скруглённые углы */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
     cursor: pointer;
+    display: flex; /* Для размещения SVG внутри кнопки */
+    align-items: center; /* Центрируем иконку по вертикали */
+    justify-content: center; /* Центрируем иконку по горизонтали */
+    width: 40px; /* Задаём фиксированный размер кнопки */
+    height: 40px; /* Высота равна ширине для квадратной кнопки */
     display: none;
+}
+
+.map-btn .icon {
+    width: 20px; /* Размер SVG-иконки */
+    height: 20px;
+    stroke: var(--tg-theme-button-text-color, #ffffff); /* Цвет иконки */
+}
+
+.map-btn:hover {
+    background-color: var(--tg-theme-accent-color, #005fa3); /* Цвет кнопки при наведении */
 }
 
 #form-container.active .map-btn {
