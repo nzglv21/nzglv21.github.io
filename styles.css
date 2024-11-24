@@ -27,7 +27,7 @@ body, html {
     left: 0;
     width: 100%;
     height: 25vh; /* 100vh минус пространство для клавиатуры */
-    max-height: 30%; /* Ограничиваем высоту формы, чтобы она не выходила за пределы видимого экрана */
+    /* max-height: 30%;  */
     background-color: var(--tg-theme-secondary-bg-color, #ffffff); /* Дополнительный цвет фона */
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -38,8 +38,8 @@ body, html {
 }
 
 #form-container.active {
-    height: 80vh; /* Увеличиваем форму, но она всё равно ограничена max-height */
-    max-height: 80vh; /* Учитываем высоту видимой области без переполнения */
+    height: 750px; /* Увеличиваем форму, но она всё равно ограничена max-height */
+     /* Учитываем высоту видимой области без переполнения */
 }
 
 /* Содержимое формы */
