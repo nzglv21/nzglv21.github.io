@@ -32,9 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleFormBtn.addEventListener('click', () => {
         // Переключение состояния формы
         formContainer.classList.toggle('active');
-        document.body.scrollTop = 0
-        
-        activeField = ''
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
+
+        activeField = '';
     });
 
     function updateFromMarker(lat, lon, isUserLocation = false) {
@@ -159,6 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formContainer = document.getElementById('form-container');
 
     fromInput.addEventListener('focus', () => {
+        window.scrollTo(0, 0);
         activeField = '';
         activateField('from');
         formContainer.classList.add('active');
@@ -167,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     toInput.addEventListener('focus', () => {
+        window.scrollTo(0, 0);
         activeField = '';
         activateField('to');
         formContainer.classList.add('active');
