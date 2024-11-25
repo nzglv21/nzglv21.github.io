@@ -21,8 +21,10 @@
         
         <div id="form">
             <div class="input-container">
-                <input type="search" id="from" placeholder="Откуда поедете?">
-                <input type="number" id="entrance" placeholder="Подъезд" style="display:none;"> <!-- Поле подъезда -->
+                <div class="combined-input-container">
+                    <input type="search" id="from" placeholder="Откуда поедете?">
+                    <span class="divider">|</span>
+                    <input type="search" id="entrance" placeholder="Подъезд"> </div>
                 <button id="map-btn-from" class="map-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -31,7 +33,6 @@
                 </button>
                 <div id="suggestions-list-from" class="suggestions-list"></div> <!-- Список подсказок для поля "Откуда" -->
             </div>
-            
             <div class="input-container">
                 <input type="search" id="to" placeholder="Куда поедете?">
                 <button id="map-btn-to" class="map-btn">

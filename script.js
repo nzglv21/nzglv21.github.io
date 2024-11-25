@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
-    // tg.expand();
-    // tg.requestFullscreen();
-    // tg.disableVerticalSwipes();
+    //tg.expand();
+    //tg.requestFullscreen();
+    //tg.disableVerticalSwipes();
     document.body.scrollTop = 0
     const ZOOM = 18;
-    const apiKey = '';
+    const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
     const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
     const map = L.map('map',
         {
@@ -148,38 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    document.getElementById('from').addEventListener('input', function() {
-        const fromInput = this.value.trim();
-    
-        // Если длина текста больше 0, показываем поля подъезда
-        if (fromInput.length > 0) {
-            document.getElementById('entrance').style.display = 'block';
-        } else {
-            document.getElementById('entrance').style.display = 'none';
-        }
-    });
-    
-    // Изменим функцию updateFromMarker, чтобы добавлять данные подъезда
-    function updateFromMarker(lat, lon, isUserLocation = false) {
-        const fromInput = document.getElementById('from');
-        fromMarker.setLatLng([lat, lon]);
-    
-        if (!isUserLocation) {
-            updateInputWithGeocode('from', lat, lon);
-        } else {
-            fromInput.value = "Ваше местоположение";
-            isUserLocationSet = true;
-        }
-    
-        // Проверяем, если подполе для подъезда видимо
-        if (document.getElementById('entrance').style.display === 'block') {
-            const entranceInput = document.getElementById('entrance').value;
-            // Здесь Вы можете как-то использовать значение подъезда, например, сохранять или выводить его
-            console.log("Подъезд: ", entranceInput);
-        }
-    }
-    
-    
     // Функция для активации поля ввода
     function activateField(field) {
         document.getElementById('from').classList.remove('active-field');
@@ -340,24 +308,23 @@ toInput.addEventListener('focus', () => {
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.addEventListener('click', () => {
         const from = fromInput.value;
+        const entrance = document.getElementById('entrance').value; // Получаем значение из поля "Подъезд"
         const to = toInput.value;
-        const entrance = document.getElementById('entrance').value;
         const fromCoords = fromMarker.getLatLng();
         const toCoords = toMarker ? toMarker.getLatLng() : null;
-
+    
         const data = {
             from: {
                 address: from,
-                coords: { lat: fromCoords.lat, lon: fromCoords.lng },
-                entrance: entrance
+                entrance: entrance, // Добавляем новый элемент "entrance"
+                coords: { lat: fromCoords.lat, lon: fromCoords.lng }
             },
             to: {
                 address: to,
                 coords: toCoords ? { lat: toCoords.lat, lon: toCoords.lng } : null
             }
         };
-
-
+    
         tg.sendData(JSON.stringify(data)); // Отправляем данные в бота
     });
 });
