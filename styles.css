@@ -28,6 +28,16 @@
     background-color: white;
     border: none;
 }
+.map-btn{
+    position: relative;
+    background-color: white;
+    border: none;
+}
+
+.icon{
+    width: 80%;
+    height: 80%;
+}
 
 svg{
     width: 10%;
@@ -68,12 +78,9 @@ svg{
     display: flex;
     align-items: center; /* Центрирует содержимое по вертикали */
     justify-content: center; /* Центрирует содержимое по горизонтали */
-    padding: 0 10px; /* Отступы слева и справа для разделения */
     color: #ccc; /* Цвет разделителя */
-    font-size: 16px; /* Размер текста разделителя */
-    border-left: 1px solid #ccc; /* Левая граница для визуального разделения */
-    border-right: 1px solid #ccc; /* Правая граница для визуального разделения */
-    margin: 0 5px; /* Отступы слева и справа для дополнительного пространства */
+    font-size: 15px; /* Размер текста разделителя */
+
 }
 
 
