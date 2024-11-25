@@ -70,6 +70,7 @@ svg{
     padding: 10px;
     font-size: 16px;
     box-sizing: border-box; /* Включает padding и border в ширину элемента */
+    background-color: white;
 }
 
 #from {
@@ -85,9 +86,10 @@ svg{
 
 }
 
-
 #entrance {
     flex: 1; /* Меньшая часть ширины */
+    min-width: 70px; /* Минимальная ширина для поля подьезда */
+
 }
 
 .map-btn {
@@ -109,6 +111,7 @@ svg{
 }
 
 #submit-btn {
+    left: 0;
     width: 100%;
     height: 100%;
     display: block;
