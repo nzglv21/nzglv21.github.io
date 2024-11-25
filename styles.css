@@ -39,8 +39,8 @@ body, html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 20vh; /* 100vh минус пространство для клавиатуры */
-    max-height: 50vh; /* Ограничиваем высоту формы, чтобы она не выходила за пределы видимого экрана */
+    height: 25vh; /* 100vh минус пространство для клавиатуры */
+    max-height: 100vh; /* Ограничиваем высоту формы, чтобы она не выходила за пределы видимого экрана */
     background-color: var(--tg-theme-secondary-bg-color, #ffffff); /* Дополнительный цвет фона */
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -64,7 +64,8 @@ body, html {
 }
 
 #form-container.keyboard-open {
-    max-height: 30vh;
+    height: calc(70vh - 100px);
+    max-height: calc(70vh - 100px);
 }
 
 #form input#entrance {
