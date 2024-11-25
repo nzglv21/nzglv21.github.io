@@ -281,8 +281,7 @@ toInput.addEventListener('focus', () => {
 
     function reverseGeocode(lat, lon, callback) {
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&zoom=18&lat=${lat}&lon=${lon}&accept-language=ru`;
-
-
+    
         fetch(url)
             .then(response => response.json())
             .then(data => {
