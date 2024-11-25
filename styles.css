@@ -59,8 +59,8 @@ body, html {
 
 
 #form-container.active {
-    height: 70vh; /* Увеличиваем форму, но она всё равно ограничена max-height */
-    max-height: 70vh; /* Учитываем высоту видимой области без переполнения */
+    height: 80vh; /* Увеличиваем форму, но она всё равно ограничена max-height */
+    max-height: 90vh; /* Учитываем высоту видимой области без переполнения */
 }
 
 #form-container.keyboard-open {
