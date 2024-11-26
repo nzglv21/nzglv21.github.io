@@ -12,15 +12,14 @@
 #form-container {
     position: fixed;
     left: 0;
-
     bottom: 0;
     width: 100%;
-    height: 25%;
+    height: 30vh; /* Используем vh для адаптивности */
     border-radius: 10px;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2);
     z-index: 10;
     background-color: white; /* Добавлен фон для контейнера формы */
-    
+    padding: 10px; /* Добавлен отступ для контейнера */
 }
 
 #toggle-form-btn {
@@ -29,28 +28,30 @@
     transform: translateX(-50%); /* Центрирует кнопку по горизонтали */
     background-color: white;
     border: none;
+    padding: 10px; /* Добавлен отступ для кнопки */
 }
-.map-btn{
+
+.map-btn {
     position: relative;
     background-color: white;
     border: none;
+    padding: 10px; /* Добавлен отступ для кнопки */
 }
 
-.icon{
+.icon {
     width: 80%;
     height: 80%;
 }
 
-svg{
+svg {
     width: 10%;
     height: 10%;
 }
 
-
 .from-input-container {
     display: flex;
     width: 100%;
-    height: 6%;
+    height: 15%; /* Используем проценты для адаптивности */
     justify-content: center; /* Центрирует по горизонтали */
     overflow: hidden; /* Скрываем выступающие части */
     margin-bottom: 10px; /* Добавлен отступ снизу */
@@ -83,24 +84,23 @@ svg{
     justify-content: center; /* Центрирует содержимое по горизонтали */
     color: #ccc; /* Цвет разделителя */
     font-size: 15px; /* Размер текста разделителя */
-
 }
 
 #entrance {
     flex: 1; /* Меньшая часть ширины */
-    min-width: 70px; /* Минимальная ширина для поля подьезда */
-
+    min-width: 90px; /* Минимальная ширина для поля подьезда */
 }
 
 .map-btn {
     width: 5%;
+    min-width: 30px; /* Минимальная ширина для поля подьезда */
 }
 
 .to-input-container {
     border-radius: 4px; /* Скругление углов */
     display: flex;
     width: 100%;
-    height: 6%;
+    height: 15%; /* Используем проценты для адаптивности */
     justify-content: center; /* Центрирует по горизонтали */
     overflow: hidden;
     margin-bottom: 10px; /* Добавлен отступ снизу */
@@ -111,9 +111,8 @@ svg{
 }
 
 #submit-btn {
-    left: 0;
     width: 100%;
-    height: 100%;
+    height: 15%; /* Используем проценты для адаптивности */
     display: block;
     margin: 2px; /* Отступы сверху и снизу */
     padding: 10px;
