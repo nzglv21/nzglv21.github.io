@@ -58,13 +58,13 @@ body, html {
 .icon {
     width: 100%;
     height: 100%;
-    background-color: var(--tg-theme-button-color, #0088cc);
+    background-color: var(--tg-theme-button-color, red);
 }
 
 svg {
     width: 10%;
     height: 10%;
-    background-color: var(--tg-theme-section-bg-color, white);;
+    background-color: var(--tg-theme-section-color, red);;
 
 }
 
