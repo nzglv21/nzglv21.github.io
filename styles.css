@@ -50,6 +50,7 @@ body, html {
     background-color: var(--tg-theme-section-bg-color, white);
     border: none;
     padding: 0px; /* Добавлен отступ для кнопки */
+    display: none;
 }
 .map-btn:active{
     display: block;

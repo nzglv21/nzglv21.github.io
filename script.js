@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
-    tg.expand();
-    tg.requestFullscreen();
-    tg.disableVerticalSwipes();
-    document.body.scrollTop = 0
+    try {
+        tg.expand();
+        tg.requestFullscreen();
+        tg.disableVerticalSwipes();
+    } catch (error) {
+        console.log(1);
+    }
+
+    const fromInput = document.getElementById('from');
+    const toInput = document.getElementById('to');
+    const formContainer = document.getElementById('form-container');
+
     const ZOOM = 18;
     const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
     const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
@@ -73,7 +81,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Создаем иконку для нового маркера
     var redIcon = L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', // Путь к изображению
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        draggable: false
+        // Путь к изображению
     });
 
     if (navigator.geolocation) {
@@ -153,9 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(field).classList.add('active-field');
     }
 
-    const fromInput = document.getElementById('from');
-    const toInput = document.getElementById('to');
-    const formContainer = document.getElementById('form-container');
+
 
  // Проверка, открыта ли клавиатура на мобильных устройствах
 function handleResize() {
@@ -169,15 +177,13 @@ function handleResize() {
 }
 
 // Добавление обработчика события на изменение размера окна
-window.addEventListener('resize', handleResize);
-handleResize(); // Вызываем сразу для проверки
+// window.addEventListener('resize', handleResize);
+// handleResize();
 
 // Функция для обработки фокуса на поле "Откуда"
 fromInput.addEventListener('focus', () => {
     // Прокручиваем поле ввода в видимую область только если клавиатура открыта
-    if (window.innerHeight < 500) {
-        fromInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+
 
     // Устанавливаем активное поле
     activeField = '';
