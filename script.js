@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
-    tg.expand();
-    tg.requestFullscreen();
-    tg.disableVerticalSwipes();
+    // tg.expand();
+    // tg.requestFullscreen();
+    // tg.disableVerticalSwipes();
     document.body.scrollTop = 0
     const ZOOM = 18;
     const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     let activeField = '1';
-    let fromMarker = L.marker([defaultLocation.lat, defaultLocation.lon], { draggable: true }).addTo(map);
+    let fromMarker = L.marker([defaultLocation.lat, defaultLocation.lon], { draggable: false }).addTo(map);
     let toMarker = null;
     let isUserLocationSet = false;
     let typingTimeout, geocodeTimeout;

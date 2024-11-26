@@ -131,7 +131,7 @@ svg {
 .map-btn {
     width: 5%;
     min-width: 30px; /* Минимальная ширина для поля подьезда */
-    display: none;
+    /* display: none; */
 }
 
 .separator{
