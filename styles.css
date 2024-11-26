@@ -83,27 +83,26 @@ svg {
     background-color: white;
 }
 
+/* Стили для подсказок */
 .suggestions-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    position: fixed;
+    z-index: 20;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.suggestion-item {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    max-height: 200px;
-    overflow-y: auto;
-    display: block; /* Скрываем список по умолчанию */
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-/* Стили для элементов списка подсказок */
-.suggestion-item {
-    display: block;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
+.suggestion-item:hover {
+    background-color: var(--tg-theme-secondary-bg-color, #f1f1f1); /* Дополнительный цвет фона */
 }
 #from {
     flex: 7; /* Большая часть ширины */
