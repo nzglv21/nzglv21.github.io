@@ -123,18 +123,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Функция для отображения подсказок в поле ввода
     function displaySuggestions(items) {
+        console.log(items);
         const suggestionList = document.getElementById(`suggestions-list-${activeField}`);
         suggestionList.innerHTML = '';
-
+    
         items.forEach(item => {
-            const suggestionText = item.name;
             const suggestionElement = document.createElement('div');
             suggestionElement.classList.add('suggestion-item');
-            suggestionElement.textContent = suggestionText;
-
+    
+            const addressElement = document.createElement('div');
+            addressElement.classList.add('address');
+            addressElement.textContent = item.address_name;
+    
+            const nameElement = document.createElement('div');
+            nameElement.classList.add('name');
+            nameElement.textContent = item.name;
+    
+            suggestionElement.appendChild(addressElement);
+            suggestionElement.appendChild(nameElement);
+    
             suggestionElement.addEventListener('click', () => {
                 if (activeField === 'from') {
-                    document.getElementById('from').value = suggestionText;
+                    document.getElementById('from').value = item.address;
                     // Перемещаем маркер "Откуда" на выбранную точку
                     const lat = item.point.lat;
                     const lon = item.point.lon;
@@ -142,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     activeField = '';
                     map.setView([lat, lon], ZOOM);  // Центрируем карту на новой точке
                 } else if (activeField === 'to') {
-                    document.getElementById('to').value = suggestionText;
+                    document.getElementById('to').value = item.address;
                     // Перемещаем маркер "Куда" на выбранную точку
                     const lat = item.point.lat;
                     const lon = item.point.lon;
@@ -153,10 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 formContainer.classList.toggle('active');
                 suggestionList.innerHTML = '';  // Скрыть подсказки после выбора
             });
-
+    
             suggestionList.appendChild(suggestionElement);
         });
     }
+    
 
     // Функция для активации поля ввода
     function activateField(field) {

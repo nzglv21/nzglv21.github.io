@@ -114,6 +114,15 @@ svg {
     transition: background-color 0.3s ease, transform 0.3s ease; /* Плавные переходы */
 }
 
+.suggestion-item .address {
+    font-weight: bold;
+}
+
+.suggestion-item .name {
+    font-size: 14px;
+    color: var(--tg-theme-secondary-text-color, #666);
+}
+
 .suggestion-item:hover {
     background-color: var(--tg-theme-secondary-bg-color, #f1f1f1); /* Дополнительный цвет фона */
 }
