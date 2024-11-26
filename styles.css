@@ -40,7 +40,7 @@ body, html {
     position: relative;
     left: 50%;
     transform: translateX(-50%); /* Центрирует кнопку по горизонтали */
-    background-color: var(--tg-theme-bg-color, white);
+    background-color: var(--tg-theme-section-bg-color, white);
     border: none;
     padding: 0px; /* Добавлен отступ для кнопки */
 }
@@ -92,7 +92,7 @@ svg {
     padding: 10px;
     font-size: 16px;
     box-sizing: border-box; /* Включает padding и border в ширину элемента */
-    background-color: var(--tg-theme-bg-color, white);
+    background-color: var(--tg-theme-section-bg-color, white);
     color: var(--tg-theme-text-color, black);
 
 }
