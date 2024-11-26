@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp; // Инициализируем Telegram WebApp
-    // tg.expand();
-    // tg.requestFullscreen();
-    // tg.disableVerticalSwipes();
+    tg.expand();
+    tg.requestFullscreen();
+    tg.disableVerticalSwipes();
     document.body.scrollTop = 0
     const ZOOM = 18;
     const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
@@ -33,9 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleFormBtn.addEventListener('click', () => {
         // Переключение состояния формы
         formContainer.classList.toggle('active');
-        document.body.scrollTop = 0;
-        window.scrollTo(0, 0);
-
         activeField = '';
     });
 
