@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formContainer = document.getElementById('form-container');
     const mapBtnFrom = document.getElementById('map-btn-from');
     const mapBtnTo = document.getElementById('map-btn-to');
+    const entranceBtn = document.getElementById('entrance');
     const ZOOM = 18;
     const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
     const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
@@ -196,6 +197,10 @@ fromInput.addEventListener('focus', () => {
     // Центрируем карту на маркере
     const center = fromMarker.getLatLng();
     map.setView([center.lat, center.lng], ZOOM);
+});
+
+entranceBtn.addEventListener('focus', () =>{
+    formContainer.classList.add('active');
 });
 
 // Функция для обработки фокуса на поле "Куда"
