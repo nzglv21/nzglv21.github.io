@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const fromInput = document.getElementById('from');
     const toInput = document.getElementById('to');
     const formContainer = document.getElementById('form-container');
-
+    const mapBtnFrom = document.getElementById('map-btn-from');
+    const mapBtnTo = document.getElementById('map-btn-to');
     const ZOOM = 18;
     const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
     const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
@@ -266,13 +267,11 @@ toInput.addEventListener('focus', () => {
 
     document.getElementById('map-btn-from').addEventListener('click', () => {
         activeField = 'from';
-        formContainer.classList.toggle('active');
         map.setView(fromMarker.getLatLng(), ZOOM);
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
         activeField = 'to';
-        formContainer.classList.toggle('active');
         if (toMarker) {
             map.setView(toMarker.getLatLng(), ZOOM);
         } else {
