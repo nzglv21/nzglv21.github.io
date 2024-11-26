@@ -64,7 +64,7 @@ body, html {
 svg {
     width: 10%;
     height: 10%;
-    color: var(--tg-theme-text-color, black);
+    background-color: var(--tg-theme-button-color, #0088cc);
 
 }
 
