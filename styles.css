@@ -28,7 +28,7 @@
     transform: translateX(-50%); /* Центрирует кнопку по горизонтали */
     background-color: white;
     border: none;
-    padding: 10px; /* Добавлен отступ для кнопки */
+    padding: 0px; /* Добавлен отступ для кнопки */
 }
 
 .map-btn {
