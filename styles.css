@@ -146,8 +146,8 @@ svg {
     display: block;
     margin: 2px; /* Отступы сверху и снизу */
     padding: 15px;
-    background-color: #007bff; /* Цвет фона кнопки */
-    color: white; /* Цвет текста кнопки */
+    background-color: var(--tg-theme-button-color, #0088cc);
+    color: var(--tg-theme-button-text-color, #ffff);
     border: none;
     border-radius: 4px;
     margin: 0;
