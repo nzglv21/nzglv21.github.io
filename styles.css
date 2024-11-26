@@ -47,7 +47,7 @@ body, html {
 
 .map-btn {
     position: relative;
-    background-color: var(--tg-theme-bg-color, white);
+    background-color: var(--tg-theme-section-bg-color, white);
     border: none;
     padding: 0px; /* Добавлен отступ для кнопки */
 }
