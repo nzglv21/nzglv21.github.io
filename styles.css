@@ -58,14 +58,13 @@ body, html {
 .icon {
     width: 100%;
     height: 100%;
-    color: var(--tg-theme-text-color, #0088cc);
-
+    background-color: var(--tg-theme-button-color, #0088cc);
 }
 
 svg {
     width: 10%;
     height: 10%;
-    color: var(--tg-theme-text-color, #0088cc);
+    color: var(--tg-theme-text-color, black);
 
 }
 
@@ -135,6 +134,7 @@ svg {
 #entrance {
     flex: 1; /* Меньшая часть ширины */
     min-width: 100px; /* Минимальная ширина для поля подьезда */
+    color: var(--tg-theme-text-color, black);
 }
 
 .map-btn {
