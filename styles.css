@@ -45,6 +45,13 @@ body, html {
     padding: 0px; /* Добавлен отступ для кнопки */
 }
 
+#toggle-arrow {
+    transition: transform 0.3s ease;
+    width: 60px;
+    height: 40px;
+    stroke: var(--tg-theme-button-color, #0088cc); /* Зеленый цвет для стрелки */
+}
+
 .map-btn {
     position: relative;
     background-color: var(--tg-theme-section-bg-color, white);
