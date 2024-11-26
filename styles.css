@@ -95,11 +95,12 @@ svg {
     z-index: 1000;
     max-height: 200px;
     overflow-y: auto;
-    display: none; /* Скрываем список по умолчанию */
+    display: block; /* Скрываем список по умолчанию */
 }
 
 /* Стили для элементов списка подсказок */
 .suggestion-item {
+    display: block;
     padding: 10px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
