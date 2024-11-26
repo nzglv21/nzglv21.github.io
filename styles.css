@@ -111,6 +111,7 @@ svg {
     cursor: pointer;
     font-size: 16px;
     color: var(--tg-theme-text-color, black);
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Плавные переходы */
 }
 
 .suggestion-item:hover {
