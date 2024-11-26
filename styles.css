@@ -26,11 +26,15 @@ body, html {
     background-color: var(--tg-theme-section-bg-color, white); /* Добавлен фон для контейнера формы */
     padding: 0; /* Добавлен отступ для контейнера */
     transition: height 0.3s ease; /* Плавный переход для высоты */
+    padding-bottom: 0 !important;
+
 }
 
 #form-container.active {
     height: calc(90%);
     max-height: calc(90% + 100px);
+    padding-bottom: 0 !important;
+
 }
 
 #toggle-form-btn {
