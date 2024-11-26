@@ -266,11 +266,13 @@ toInput.addEventListener('focus', () => {
     });
 
     document.getElementById('map-btn-from').addEventListener('click', () => {
+        formContainer.classList.remove('active');
         activeField = 'from';
         map.setView(fromMarker.getLatLng(), ZOOM);
     });
 
     document.getElementById('map-btn-to').addEventListener('click', () => {
+        formContainer.classList.remove('active');
         activeField = 'to';
         if (toMarker) {
             map.setView(toMarker.getLatLng(), ZOOM);

@@ -131,7 +131,7 @@ svg {
 
 #entrance {
     flex: 1; /* Меньшая часть ширины */
-    min-width: 100px; /* Минимальная ширина для поля подьезда */
+    min-width: 85px; /* Минимальная ширина для поля подьезда */
     color: var(--tg-theme-text-color, black);
 }
 
@@ -144,11 +144,10 @@ svg {
 .separator{
     background-color: var(--tg-theme-section-separator-color, #ccc);
     box-sizing: border-box;
-    content: "";
     display: block;
     height: 1px;
     position: absolute;
-    width: calc(100%);
+    width: 95%;
     margin-right: 1vh;
     margin-left: 1vh;
     z-index: 50;
@@ -170,6 +169,7 @@ svg {
 #submit-btn {
     width: 95%;
     height: 100%; /* Используем проценты для адаптивности */
+    top: -2px;
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
@@ -179,4 +179,5 @@ svg {
     font-size: 20px;
     border: none;
     border-radius: 10px;
+    margin-bottom: 5px;
 }
