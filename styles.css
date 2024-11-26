@@ -31,10 +31,9 @@ body, html {
 }
 
 #form-container.active {
-    height: calc(90%);
-    max-height: calc(90% + 100px);
-    padding-bottom: 0 !important;
-
+    top:10%;
+    height: 80%;
+    max-height: 80%;
 }
 
 #toggle-form-btn {
