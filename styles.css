@@ -108,6 +108,9 @@ svg {
     width: 100%;
     background-color: var(--tg-theme-bg-color, white);
     border-radius: 4px;
+
+    max-height: 150px; /* Ограничение высоты для подсказок */
+    overflow-y: auto; /* Прокрутка, если подсказок много */
 }
 
 .suggestion-item {
@@ -123,11 +126,12 @@ svg {
 
 .suggestion-item .address {
     font-weight: bold;
+    color: var(--tg-theme-text-color, black);
 }
 
 .suggestion-item .name {
     font-size: 14px;
-    color: var(--tg-theme-secondary-text-color, #666);
+    color: var(--tg-theme-subtitle-text-color, #666);
 }
 
 .suggestion-item:hover {
