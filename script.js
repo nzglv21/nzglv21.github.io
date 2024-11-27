@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tg.expand();
         tg.requestFullscreen();
         tg.disableVerticalSwipes();
+        tg.addToHomeScreen();
     } catch (error) {
         console.log(1);
     }
