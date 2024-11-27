@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tg.expand();
         tg.requestFullscreen();
         tg.disableVerticalSwipes();
-        tg.requestEmojiStatusAccess();
+        tg.ScanQrPopupParams();
     } catch (error) {
         console.log(1);
     }
