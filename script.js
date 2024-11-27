@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const entranceBtn = document.getElementById('entrance');
     const ZOOM = 17;
     const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
-    const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
+    const defaultLocation = { lat: 53.339323, lon: 58.506196}; // Москва, начальная точка
     const map = L.map('map',
         {
             zoomControl: false
