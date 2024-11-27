@@ -171,14 +171,16 @@ svg {
     align-items: center; /* Центрирует содержимое по вертикали */
     justify-content: center; /* Центрирует содержимое по горизонтали */
     color: var(--tg-theme-section-separator-color, #ccc); /* Цвет разделителя */
-    font-size: 25px; /* Размер текста разделителя */
+    font-size: 1vh; /* Размер текста разделителя */
 }
 
 #entrance {
     flex: 2; /* Меньшая часть ширины */
     width: 60px; /* Минимальная ширина для поля подьезда */
     color: var(--tg-theme-text-color, black);
+    border-left: 2px solid #ccc;
     margin-right: 0;
+    margin-left: 0;
     padding-right: 0;
 }
 
@@ -186,7 +188,10 @@ svg {
     width: 2.5%;
     min-width: 40px; /* Минимальная ширина для поля подьезда */
     margin-right: 2px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    border-left: 2px solid #ccc;
+    color: #ccc;
+    margin: 1vh;
     /* display: none; */
 }
 
