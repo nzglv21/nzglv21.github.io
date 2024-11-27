@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function getSuggestions(query) {
         const fromCoords = fromMarker.getLatLng();
         if (query.length >= 3) { // Проверяем, что длина запроса >= 3 символов
-            const url = `https://catalog.api.2gis.com/3.0/suggests?q=Уфа, ${query}&fields=items.point&sort_point=${fromCoords.lat},${fromCoords.lng}&suggest_type=route_endpoint&key=${apiKey}`;
+            const url = `https://catalog.api.2gis.com/3.0/suggests?q=${query}&fields=items.point&sort_point=${fromCoords.lat},${fromCoords.lng}&suggest_type=route_endpoint&key=${apiKey}`;
 
             fetch(url)
                 .then(response => response.json())
