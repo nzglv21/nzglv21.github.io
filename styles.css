@@ -177,6 +177,7 @@ svg {
 #entrance {
     flex: 2; /* Меньшая часть ширины */
     width: 60px; /* Минимальная ширина для поля подьезда */
+    border-radius: 0px;
     color: var(--tg-theme-text-color, black);
     border-left: 2px solid #ccc;
     margin-right: 0;
