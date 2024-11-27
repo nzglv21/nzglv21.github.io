@@ -9,21 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
-    tg.BottomButton.main.text = "Submit";
-    tg.BottomButton.main.color = "#007BFF";
-    tg.BottomButton.main.textColor = "#FFFFFF";
-    tg.BottomButton.main.isVisible = true;
-    tg.BottomButton.main.isActive = true;
-
-    // Пример настройки вторичной кнопки
-    tg.BottomButton.secondary.text = "Cancel";
-    tg.BottomButton.secondary.color = "#FF0000";
-    tg.BottomButton.secondary.textColor = "#FFFFFF";
-    tg.BottomButton.secondary.isVisible = true;
-    tg.BottomButton.secondary.isActive = true;
-    tg.BottomButton.secondary.position = "left";
-
     const fromInput = document.getElementById('from');
     const toInput = document.getElementById('to');
     const formContainer = document.getElementById('form-container');
