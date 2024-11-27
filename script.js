@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (toMarker) {
             toMarker.setLatLng([lat, lon]);
         } else {
-            toMarker = L.marker([lat, lon], { draggable: true }).addTo(map);
+            toMarker = L.marker([lat, lon], { draggable: false }).addTo(map);
             toMarker.setIcon(redIcon);
 
             // Добавляем обработчик перемещения для "Куда"
@@ -85,9 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Создаем иконку для нового маркера
     var redIcon = L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-        draggable: false
-        // Путь к изображению
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png'        // Путь к изображению
     });
 
     if (navigator.geolocation) {
