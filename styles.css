@@ -40,7 +40,7 @@ body, html {
     z-index: 10;
     background-color: var(--tg-theme-section-bg-color, white); /* Добавлен фон для контейнера формы */
     padding: 0; /* Добавлен отступ для контейнера */
-    transition: height 0.3s linear; 
+    transition: height 2s linear; 
     padding-bottom: 0 !important;
 }
 
@@ -71,12 +71,16 @@ body, html {
     transform: rotate(180deg); /* Поворот стрелки на 180 градусов */
 }
 
+#form-container.active .map-btn {
+    display: block;
+}
+
 .map-btn {
     position: relative;
     background-color: var(--tg-theme-section-bg-color, white);
     border: none;
     padding: 0px; /* Добавлен отступ для кнопки */
-    display: block;
+    display: none;
 }
 
 .icon {
@@ -171,14 +175,18 @@ svg {
 }
 
 #entrance {
-    flex: 1; /* Меньшая часть ширины */
-    min-width: 85px; /* Минимальная ширина для поля подьезда */
+    flex: 2; /* Меньшая часть ширины */
+    width: 60px; /* Минимальная ширина для поля подьезда */
     color: var(--tg-theme-text-color, black);
+    margin-right: 0;
+    padding-right: 0;
 }
 
 .map-btn {
-    width: 5%;
-    min-width: 30px; /* Минимальная ширина для поля подьезда */
+    width: 2.5%;
+    min-width: 40px; /* Минимальная ширина для поля подьезда */
+    margin-right: 2px;
+    border-radius: 5px;
     /* display: none; */
 }
 

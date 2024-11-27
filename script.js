@@ -217,7 +217,6 @@ entranceBtn.addEventListener('focus', () =>{
 // Функция для обработки фокуса на поле "Куда"
 toInput.addEventListener('focus', () => {
     activeField = '';
-    activateField('to');
     formContainer.classList.add('active');
 
     const center = toMarker ? toMarker.getLatLng() : fromMarker.getLatLng();
