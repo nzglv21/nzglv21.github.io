@@ -334,6 +334,27 @@ toInput.addEventListener('focus', () => {
         const fromCoords = fromMarker.getLatLng();
         const toCoords = toMarker ? toMarker.getLatLng() : null;
     
+        // Проверка заполнения полей
+        if (!from || !entrance || !to) {
+            const popupParams = {
+                message: 'Please fill in all required fields.',
+                buttons: [
+                    {
+                        id: 'close',
+                        type: 'default',
+                        text: 'Close'
+                    }
+                ]
+            };
+    
+            tg.showPopup(popupParams, (buttonId) => {
+                if (buttonId === 'close') {
+                    console.log('Popup closed');
+                }
+            });
+            return;
+        }
+    
         const data = {
             from: {
                 address: from,
@@ -348,4 +369,5 @@ toInput.addEventListener('focus', () => {
     
         tg.sendData(JSON.stringify(data)); // Отправляем данные в бота
     });
+    
 });
