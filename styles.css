@@ -75,13 +75,7 @@ body, html {
     display: block;
 }
 
-.map-btn {
-    position: relative;
-    background-color: var(--tg-theme-section-bg-color, white);
-    border: none;
-    padding: 0px; /* Добавлен отступ для кнопки */
-    display: none;
-}
+
 
 .icon {
     width: 100%;
@@ -185,15 +179,21 @@ svg {
     padding-right: 0;
 }
 
+
+
 .map-btn {
+    position: relative;
+    background-color: var(--tg-theme-section-bg-color, white);
+    border: none;
+    padding: 0px; /* Добавлен отступ для кнопки */
+    display: none;
     width: 2.5%;
     min-width: 40px; /* Минимальная ширина для поля подьезда */
     margin-right: 2px;
-    /* border-radius: 5px; */
     border-left: 2px solid #ccc;
-    color: #ccc;
+    color: #999;
     margin: 1vh;
-    /* display: none; */
+    margin-left: 0;
 }
 
 .separator{
