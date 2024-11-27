@@ -13,10 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const fromInput = document.getElementById('from');
     const toInput = document.getElementById('to');
     const formContainer = document.getElementById('form-container');
-    const mapBtnFrom = document.getElementById('map-btn-from');
-    const mapBtnTo = document.getElementById('map-btn-to');
     const entranceBtn = document.getElementById('entrance');
-    const ZOOM = 18;
+    const ZOOM = 17;
     const apiKey = '810da77a-9a4b-43a9-86db-9c1435feaf77';
     const defaultLocation = { lat: 54.735152, lon: 55.958736}; // Москва, начальная точка
     const map = L.map('map',
@@ -175,23 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('to').classList.remove('active-field');
         document.getElementById(field).classList.add('active-field');
     }
-
-
-
- // Проверка, открыта ли клавиатура на мобильных устройствах
-function handleResize() {
-    const formContainer = document.getElementById('form-container');
-    const isKeyboardOpen = window.innerHeight < 500; // Если высота окна меньше 500px, считаем, что клавиатура открыта
-    if (isKeyboardOpen) {
-        formContainer.classList.add('keyboard-open');
-    } else {
-        formContainer.classList.remove('keyboard-open');
-    }
-}
-
-// Добавление обработчика события на изменение размера окна
-// window.addEventListener('resize', handleResize);
-// handleResize();
 
 // Функция для обработки фокуса на поле "Откуда"
 fromInput.addEventListener('focus', () => {
