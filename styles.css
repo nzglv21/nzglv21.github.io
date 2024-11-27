@@ -193,19 +193,7 @@ svg {
     border-left: 2px solid #ccc;
     color: #999;
     margin: 1vh;
-    margin-left: 0;
-}
-
-.separator{
-    background-color: var(--tg-theme-section-separator-color, #ccc);
-    box-sizing: border-box;
-    display: block;
-    height: 1px;
-    position: absolute;
-    width: 95%;
-    margin-right: 2.5%;
-    margin-left: 2.5%;
-    z-index: 50;
+    margin-left: 2px;
 }
 .to-input-container {
     border-radius: 4px; /* Скругление углов */
