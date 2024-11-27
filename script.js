@@ -335,9 +335,9 @@ toInput.addEventListener('focus', () => {
         const toCoords = toMarker ? toMarker.getLatLng() : null;
     
         // Проверка заполнения полей
-        if (!from || !entrance || !to) {
+        if (!from || !to) {
             const popupParams = {
-                message: 'Please fill in all required fields.',
+                message: 'Заполните поля откуда и куда',
                 buttons: [
                     {
                         id: 'close',
@@ -347,7 +347,7 @@ toInput.addEventListener('focus', () => {
                 ]
             };
     
-            tg.showPopup(popupParams, (buttonId) => {
+            tg.showAlert(popupParams, (buttonId) => {
                 if (buttonId === 'close') {
                     console.log('Popup closed');
                 }
