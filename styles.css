@@ -40,7 +40,7 @@ body, html {
     z-index: 10;
     background-color: var(--tg-theme-section-bg-color, white); /* Добавлен фон для контейнера формы */
     padding: 0; /* Добавлен отступ для контейнера */
-    transition: height 2s linear; 
+    transition: height 0.3s linear; 
     padding-bottom: 0 !important;
 }
 
